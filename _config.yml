@@ -35,7 +35,7 @@ social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: seyeon040768
-  email: example@domain.com # change to your email address
+  email: seyeon040768@gmail.com # change to your email address
   links:
     - https://github.com/seyeon040768
     - https://www.linkedin.com/in/seyeon040768
@@ -82,7 +82,7 @@ comments:
   # utterances settings › https://utteranc.es/
   utterances:
     repo: seyeon040768/seyeon040768.github.io # <gh-username>/<repo>
-    issue_term: # < url | pathname | title | ...>
+    issue_term: pathname # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:
     repo: # <gh-username>/<repo>
