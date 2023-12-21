@@ -18,7 +18,7 @@ typora-root-url: ../
 
 이 글은 [노승은, [바닥부터 배우는 강화 학습](https://shop.youngjin.com/goods/view?no=103), 영진닷컴(2022)]을 바탕으로 작성되었습니다.
 
-# 기계 학습(machine learning)의 분류
+# 1. 기계 학습(machine learning)의 분류
 
 - 지도 학습(supervised learning)
   - **정답이 있는** 데이터를 통해 학습
@@ -29,7 +29,7 @@ typora-root-url: ../
 - 강화 학습(reinforcement learning)
   - 보상을 최대화 하기 위해 **시행착오**를 거쳐 학습
 
-# 순차적 의사결정 문제(sequential decision making)
+# 2. 순차적 의사결정 문제(sequential decision making)
 
 - 강화 학습이 해결하고자 하는 문제
 - 각 단계의 **결정이 다음 단계에 영향**을 주는 문제
@@ -40,7 +40,7 @@ typora-root-url: ../
   - 게임
     - 기본 공격, 스킬, 이동 등 여러 행동을 할 수 있으며 미래에 영향을 끼침
 
-# 보상(reward)
+# 3. 보상(reward)
 
 - 의사결정을 **얼마나 잘하고 있는지** 알려주는 신호
 - 강화 학습의 목적이 보상의 총합, 즉 **누적 보상(cumulative reward)**를 **최대화**하는 것
@@ -63,7 +63,7 @@ typora-root-url: ../
 - 행동과 보상이 일대일 대응되지 않음
 - 행동에 대한 보상이 한참 뒤에 주어질 수 있기 때문에 어떤 행동에 따른 보상인지 알기 어려움
 
-# 에이전트(agent)와 환경(environment)
+# 4. 에이전트(agent)와 환경(environment)
 
 ![reinforcement_learning_diagram](/assets/img/2023-12-21-reinforcement-learning-1/reinforcement_learning_main.png)
 
@@ -92,7 +92,7 @@ typora-root-url: ../
     2. 에이전트에게 줄 보상 $$r_{t+1}$$ 계산
     3. $$s_{t+1}$$과 $$r_{t+1}$$을 에이전트에게 전달
 
-# 강화 학습의 위력
+# 5. 강화 학습의 위력
 
 - 병렬성
   - 수많은 시뮬레이터를 통해 **동시에 학습** 가능
