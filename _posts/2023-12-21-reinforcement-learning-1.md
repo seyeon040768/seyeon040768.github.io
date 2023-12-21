@@ -1,7 +1,7 @@
 ---
 title: 강화학습 Chapter 1. 강화 학습이란
 author: seyeon
-date: 2023-12-21 20:00:00 +0900
+date: 2023-12-21 19:51:00 +0900
 categories: [AI, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
