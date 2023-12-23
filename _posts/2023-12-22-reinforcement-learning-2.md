@@ -16,7 +16,7 @@ typora-root-url: ../
 
 # 참고 자료
 
-이 글은 [노승은, [바닥부터 배우는 강화 학습](https://shop.youngjin.com/goods/view?no=103), 영진닷컴(2022)]을 바탕으로 작성되었습니다.
+이 글은 [노승은, [바닥부터 배우는 강화 학습](https://shop.youngjin.com/goods/view?no=103), 영진닷컴(2020)]을 바탕으로 작성되었습니다.
 
 
 
