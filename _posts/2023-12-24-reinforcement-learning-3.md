@@ -1,5 +1,5 @@
 ---
-title: 강화학습 Chapter 3. 벨만 방정식
+title: 강화학습 Chapter 3. 벨만 방정식(Bellman Equation)
 author: seyeon
 date: 2023-12-24 02:17:00 +0900
 categories: [AI, Reinforcement Learning]
@@ -73,7 +73,7 @@ $$
 
 - 예)
 
-  ![액션 밸류로 상태 밸류 계산하기](/assets/img/2023-12-24-reinforcement-learning-3/step1_1_example.png){: w="50%" h="50%"}
+  ![액션 밸류로 상태 밸류 계산하기](/assets/img/2023-12-24-reinforcement-learning-3/1_step1_1_example.png){: w="50%" h="50%"}
   
 
 <br/>
@@ -96,7 +96,7 @@ $$
 
 - 예)
 
-  ![상태 밸류로 액션 밸류 계산하기](/assets/img/2023-12-24-reinforcement-learning-3/step1_2_example.png){: w="50%" h="50%"}
+  ![상태 밸류로 액션 밸류 계산하기](/assets/img/2023-12-24-reinforcement-learning-3/1_step1_2_example.png){: w="50%" h="50%"}
   
 
 <br/>
@@ -138,3 +138,116 @@ $$
   - $$r_s^a$$와 $$P_{ss^\prime}^a$$를 알 때 **"MDP를 안다"**고 표현
 - **모델-프리(model-free) 접근법**: MDP를 모를 때 경험하며 학습하는 접근법
 - **모델-기반(model-based) 접근법** 또는 **플래닝(planning)**: MDP를 알 때 학습하는 접근법
+
+# 2. 벨만 최적 방정식(Bellman Optimality Equation)
+
+## 최적 밸류와 최적 상태
+
+### 최적 밸류(optimal value)
+
+$$
+\begin{align}
+& v_*(s) = \max_\pi v_\pi (s) \\
+& q_*(s, a) = \max_\pi q_\pi (s, a)
+\end{align}
+$$
+
+- MDP 안에 존재하는 모든 $$\pi$$ 중 **가장 좋은 $$\pi$$를 선택**하여 계산한 밸류
+
+  - $$v_* (s)$$: $$v_\pi (s)$$의 값을 가장 높게 하는 $$\pi$$를 선택하여 계산
+  - $$q_* (s, a)$$: $$q_\pi (s, a)$$의 값을 가장 높게 하는 $$\pi$$를 선택하여 계산
+
+- 예)
+
+  - 가능한 정책의 집합 $$\{\pi_1, \pi_2, \pi_3, ...\}$$
+
+  - 상태 $$s_0$$에서의 밸류의 집합 $$\{v_{\pi_1}(s_0),v_{\pi_2}(s_0),v_{\pi_3}(s_0), ...\}$$
+
+    - 밸류의 집합에서 가장 큰 값이 $$v_{\pi_5}(s_0)$$라면 $$v_*(s_0) = v_{\pi_5}(s_0)$$
+
+  - 만약 상태별로 가장 높은 밸류를 주는 정책이 모두 다르다면?
+
+    - $$s_0$$에서는 $$\pi_5$$를 따를 때 최고지만, $$s_1$$에서는 $$\pi_3$$를 따를 때 최고라면?
+
+    - $$s_0$$에서는 $$\pi_5$$를 따르고, $$s_1$$에서는 $$\pi_3$$를 따르는 새로운 정책 $$\pi_*$$를 만들면 됨
+
+      > 여기서 $$\pi_*$$를 **최적 정책**이라고 부름
+      {: .prompt-tip}
+
+### 최적 정책(optimal policy)
+
+- 모든 상태 $$s$$에 대해, $$v_{\pi_1}(s) \gt v_{\pi_2}(s)$$이면  $$\pi_1 \gt \pi_2$$
+
+  - **부분 순서(partial ordering)**: 모든 정책 중 **일부만 비교해여 순서를 정할 수 있다**는 뜻
+
+    - 모든 정책 사이의 서열을 매기는 것을 불가능($$s_0$$에서는 $$\pi_5$$가 최고지만, $$s_1$$에서는 $$\pi_3$$이 최고일 수 있음)
+
+    - 따라서 서열을 매길 수 있는 정책들이 부분적으로 존재
+
+      > MDP 내의 모든 $$\pi$$에 대해 $$\pi_* \gt \pi$$를 만족하는 $$\pi_*$$가 반드시 존재한다.
+      {: .prompt-info}
+
+- 최적 정책: $$\pi_*$$
+
+- 최적 밸류: $$v_*(s) = v_{\pi_*}(s)$$
+
+- 최적 액션 밸류: $$q_*(s, a) = q_{\pi_*}(s, a)$$
+
+## 0단계
+
+$$
+\begin{align}
+& v_*(s) = \max_a \mathbb{E} \left[r + \gamma v_*(s^\prime) \mid s_t = s, a_t = a\right] \\
+& q_*(s, a) = \mathbb{E} \left[r + \gamma \max_{a^\prime}q_*(s^\prime, a^\prime) \mid s_t = s, a_t = a\right]
+\end{align}
+$$
+
+- 벨만 기대 방정식과 비교하면 $$\mathbb {E}_\pi$$ 대신 $$\mathbb{E}$$ 사용
+  - 벨만 기대 방정식에서는 주어진 **$$\pi$$가 액션을 선택**
+  - 벨만 최적 방정식에서는 모든 액션들 중 **기댓값을 가장 크게하는 $$a$$를 선택**
+  - 따라서 $$\pi$$의 역할이 없어짐
+
+## 1단계
+
+### $$q_*$$를 이용해 $$v_*$$ 계산하기
+
+$$
+v_*(s) = \max_a q_*(s, a)
+$$
+
+- $$s$$의 최적 밸류 = $$s$$에서 선택할 수 있는 $$a$$ 중 액션 밸류가 가장 높아지는 $$a$$
+- 예)
+  
+  ![두 개의 액션이 선택 가능한 상태 s](/assets/img/2023-12-24-reinforcement-learning-3/2_step1_1_example.png){: w="50%" h="50%"}
+
+<br/>
+
+$$
+\begin{align}
+v_*(s) & = \max_a q_*(s, a) \\
+& = \max(q_*(s, a_1), q_*(s, a_2)) \\
+& = \max(1, 2) = 2
+\end{align}
+$$
+
+### $$v_*$$를 이용해 $$q_*$$ 계산하기
+
+$$
+q_*(s, a) = r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a v_*(s^\prime)
+$$
+
+## 2단계
+
+$$
+\begin{align}
+& v_*(s) = \max_a q_*(s, a) = \max_a \left[ r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a v_*(s^\prime) \right] \quad
+\because q_*(s, a) = r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a v_*(s^\prime) \\
+
+& q_*(s, a) = r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a v_*(s^\prime) = r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a \max_{a^\prime} q_*(s^\prime, a^\prime) \quad
+\because v_*(s^\prime) = \max_{a^\prime} q_*(s^\prime, a^\prime)
+
+\end{align}
+$$
+
+- 정책 $$\pi$$가 주여져 있고, **$$\pi$$를 평가하고 싶을 때**에는 벨만 기대 방정식 사용
+- **최적의 밸류를 찾고 싶을 때**는 벨만 최적 방정식 사용
