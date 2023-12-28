@@ -153,3 +153,49 @@ typora-root-url: ../
 ![간결해진 정책 이터레이션](/assets/img/2023-12-25-reinforcement-learning-4/early_stopping.png){: w="20%" h="20%"}
 
 - 이렇게 하면 **간결하고 빠르게** 최적 정책을 찾을 수 있음
+
+# 최고의 정책 찾기 - 밸류 이터레이션
+
+- 벨만 최적 방정식을 이용해 단번에 최적 정책을 도출
+
+## 1. 테이블 초기화
+
+![테이블 초기화](/assets/img/2023-12-25-reinforcement-learning-4/grid_init.png){: w="50%" h="50%"}
+
+- 정책 이터레이션에서는 테이블의 값이 $$\pi$$의 밸류였다면 밸류 이터레이션에서는 최적 정책 $$\pi^*$$의 밸류인 $$v_*(s)$$를 의미
+
+## 2. 값 업데이트
+
+![한 상태의 값을 업데이트](/assets/img/2023-12-25-reinforcement-learning-4/grid_update_1.png){: w="50%" h="50%"}
+
+- 벨만 최적 방정식을 이용하여 값을 업데이트
+
+	$$
+  v_*(s) = \max_a \left[ r_s^a + \gamma \sum_{s^\prime \in S} p_{ss^\prime}^a v_*(s^\prime) \right]
+  $$
+  
+  - 가능한 $$a$$ 중 가장 밸류가 큰 액션의 값을 선택
+  
+  - 보상 $$r_s^a$$는 -1
+  
+  - $$\gamma$$는 1로 계산
+  
+  - 동서남북 중 하나의 방향으로 이동하는 액션을 실행하면 **무조건 해당 상태에 도착**하므로 $$P_{ss^\prime}^a$$는 1
+  - 
+    $$
+    v_*(s_5) = \max(-1 + 1.0 \times (1 \times 0.0), -1 + 1.0 \times (1 \times 0.0), -1 + 1.0 \times (1 \times 0.0), -1 + 1.0 \times (1 \times 0.0)) = -1.0
+    $$
+
+![모든 상태 업데이트](/assets/img/2023-12-25-reinforcement-learning-4/grid_update_all.png){: w="50%" h="50%"}
+
+- 모든 상태에 대해 벨만 최적 방정식을 적용해 값을 업데이트
+
+## 3. [과정 2](#2-값-업데이트)를 반복
+
+![수렴할 때까지 반복](/assets/img/2023-12-25-reinforcement-learning-4/grid_valueIter_repeat_update.png){: w="50%" h="50%"}
+
+- 수렴할 때까지 과정 2를 충분히 반복
+
+## 4. 최적 정책 도출
+
+- [과정 3](3-과정-2를-반복)에서 구한 결과에 대한 그리디 정책을 생성
