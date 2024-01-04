@@ -93,6 +93,8 @@ $$
   - 경험을 통해 $$q(s, a)$$ 테이블의 값 업데이트(정책 평가)
   - 업데이트된 $$q(s, a)$$ 테이블을 이용하여 $$\varepsilon-\textrm{greedy}$$ 정책 생성
 
+### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=AukmOD4gvCMw)
+
 ### 라이브러리 import
 
 ``` python
