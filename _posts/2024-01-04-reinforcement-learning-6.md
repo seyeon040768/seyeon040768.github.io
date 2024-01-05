@@ -93,7 +93,7 @@ $$
   - 경험을 통해 $$q(s, a)$$ 테이블의 값 업데이트(정책 평가)
   - 업데이트된 $$q(s, a)$$ 테이블을 이용하여 $$\varepsilon-\textrm{greedy}$$ 정책 생성
 
-### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=AukmOD4gvCMw)
+### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=NS7CUdkSwBKu)
 
 ### 라이브러리 import
 
@@ -188,6 +188,7 @@ class QAgent():
             self.q_table[y, x, a] += self.alpha * (cum_reward - self.q_table[y, x, a])
 
             cum_reward += r
+            
     def anneal_eps(self):
         self.eps -= 0.03
         self.eps = max(self.eps, 0.1)
@@ -244,4 +245,233 @@ main()
 ['→', '→', '→', '↑', '↑', '→', '↑']
 ['→', '→', '↑', '↑', '↑', '↑', '↑']
 ```
+
+# 2. TD 컨트롤 1 - SARSA
+
+## MC 대신 TD
+
+![TD 정책 이터레이션](/assets/img/2024-01-04-reinforcement-learning-6/td_control_sarsa.png){: w="50%" h="50%"}
+
+- 정책 평가 단계에서 **MC 대신 TD**를 사용
+
+$$
+\begin{align}
+& v_\pi(s_t) = \mathbb{E}_\pi[r_{t+1} + \gamma v_\pi(s_{t+1})] \\
+& q_\pi(s_t, a_t) = \mathbb{E}_\pi[r_{t+1} + \gamma q_\pi(s_{t+1}, a_{t+1})]
+\end{align}
+$$
+
+- 벨만 기대 방정식을 이용하여 계산식을 구할 수 있음
+
+$$
+\begin{align}
+& V(S) = V(S) + \alpha(R + \gamma V(S^\prime) - V(S)) \\
+& Q(S, A) = Q(s, A) + \alpha(R + \gamma Q(S^\prime, A^\prime) - Q(S, A))
+\end{align}
+$$
+
+- 한 스텝마다 생성된 데이터를 이용해 TD 타깃을 계산하여 기존의 테이블의 값을 조금씩 업데이트
+
+![SARSA](/assets/img/2024-01-04-reinforcement-learning-6/sarsa.png){: w="50%" h="50%"}
+
+- 상태 $$s$$에서 액션 $$a$$를 선택하여 보상 $$r$$을 받고 상태 $$s^\prime$$에 도착하여 다음 액션 $$a^\prime$$를 선택
+  - 이 데이터를 이용해 $$q(s, a)$$를 조금씩 업데이트
+
+
+## SARSA 구현
+
+### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=8tvbD6P7rEKw)
+
+### 라이브러리 import
+
+``` python
+import random
+import numpy as np
+```
+
+### 환경 class
+
+``` python
+class GridWorld():
+    def __init__(self, grid):
+        self.grid = grid
+        self.grid_height = len(grid)
+        self.grid_width = len(grid[0])
+
+        self.y = 0
+        self.x = 0
+
+    def step(self, a):
+        if a == 0:
+            self.move_up()
+        elif a == 1:
+            self.move_down()
+        elif a == 2:
+            self.move_right()
+        elif a == 3:
+            self.move_left()
+
+        reward = -1
+        done = self.is_done()
+        return (self.y, self.x), reward, done
+
+    def move_up(self):
+        self.y -= 1
+        if self.y < 0 or self.grid[self.y][self.x] == 2:
+            self.y += 1
+
+    def move_down(self):
+        self.y += 1
+        if self.y > self.grid_height - 1 or self.grid[self.y][self.x] == 2:
+            self.y -= 1
+
+    def move_right(self):
+        self.x += 1
+        if self.x > self.grid_width - 1 or self.grid[self.y][self.x] == 2:
+            self.x -= 1
+
+    def move_left(self):
+        self.x -= 1
+        if self.x < 0 or self.grid[self.y][self.x] == 2:
+            self.x += 1
+
+    def is_done(self):
+        return self.grid[self.y][self.x] == 1
+
+    def get_state(self):
+        return (self.y, self.x)
+
+    def reset(self):
+        self.y = 0;
+        self.x = 0
+        return (self.y, self.x)
+```
+
+### 에이전트 class
+
+``` python
+class QAgent():
+    def __init__(self):
+        self.q_table = np.zeros((5, 7, 4))
+        self.eps = 0.9
+        self.alpha = 0.1
+
+    def select_action(self, s):
+        y, x = s
+        coin = random.random()
+        if coin < self.eps:
+            action = random.randint(0, 3)
+        else:
+            action_val = self.q_table[y, x, :]
+            action = np.argmax(action_val)
+        return action
+
+    def update_table(self, transition):
+        s, a, r, s_prime = transition
+        y, x = s
+        next_y, next_x = s_prime
+        a_prime = self.select_action(s_prime)
+
+        self.q_table[y, x, a] += self.alpha * (r + self.q_table[next_y, next_x, a_prime] - self.q_table[y, x, a])
+
+    def anneal_eps(self):
+        self.eps -= 0.03
+        self.eps = max(self.eps, 0.1)
+
+    def show_table(self):
+        q_lst = self.q_table.tolist()
+        num2arrow = ['↑', '↓', '→', '←']
+        data = np.zeros((5, 7)).tolist()
+        for row_idx, row_val in enumerate(q_lst):
+            for col_idx, col_val in enumerate(row_val):
+                action = np.argmax(col_val)
+                data[row_idx][col_idx] = num2arrow[action]
+        print(*data, sep='\n')
+```
+
+### 메인 함수
+
+``` python
+def main():
+    grid = [
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 2, 0, 1],
+        [0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 2, 0, 0]
+    ]
+    env = GridWorld(grid)
+    agent = QAgent()
+
+    for n_epi in range(10000):
+        done = False
+
+        s = env.reset()
+        while not done:
+            a = agent.select_action(s)
+            s_prime, r, done = env.step(a)
+            agent.update_table((s, a, r, s_prime))
+            s = s_prime
+        agent.anneal_eps()
+
+    agent.show_table()
+
+main()
+```
+
+### 학습 결과
+
+```
+['↓', '↓', '↑', '→', '→', '→', '↓']
+['↓', '↓', '↑', '→', '→', '→', '↓']
+['→', '↓', '↑', '↑', '↑', '→', '↑']
+['→', '→', '→', '↑', '↑', '→', '↑']
+['→', '→', '→', '↑', '↑', '↓', '←']
+```
+# 3. TD 컨트롤 2 - Q러닝
+- 처음으로 딥러닝과 결합되어 성과를 보여준 알고리즘
+
+  > "Human-level control through deep reinforcement learning"이라는 제목의 논문이 2015년에 출판됨
+  >
+  > 딥러닝과 강화 학습 알고리즘인 Q러닝을 결합하여 고전 비디오 게임인 아타리 2600을 사람 수준으로 플레이하는 에이전트를 만듦
+  {: .prompt-info}
+
+## Off-Policy와 On-Policy
+
+- **타깃 정책(target policy)**: 강화하고자 하는 목표가 되는 정책
+- **행동 정책(behavior policy)**: 실제로 환경과 상호 작용하며 경험을 쌓는 정책
+- **On-Policy**: 타깃 정책과 행동 정책이 같은 경우
+- **Off-Policy**: 타깃 정책과 행동 정책이 다른 경우
+- 예)
+  - 게임을 **플레이하는 A**와 A가 플레이하는 것을 **지켜보는 B**가 있을 때, **A는 On-Policy**, **B는 Off-Policy**
+  - A
+    - 타깃 정책: **자신**의 정책
+    - 행동 정책: **자신**의 정책
+  - B
+    - 타깃 정책: **자신**의 정책
+    - 행동 정책: **A**의 정책
+- Off-Policy와 지도 학습의 차이점
+  - 지도 학습: A의 정책을 보고 **무조건 정답**이라고 생각
+    - A의 행동 중 좋지 않은 행동이 있어도 그대로 따라할 가능성이 높음
+  - Off-Policy: A의 정책이 **틀릴 수도 있다**는 점을 인지
+    - A의 행동 중 좋지 않은 행동이 있다면 이를 보완할 가능성이 높음
+
+## Off-Policy 학습의 장점
+
+### 과거의 경험 재사용
+
+- On-Policy의 경우 타깃 정책과 행동 정책이 같아야 하기 때문에 다른 정책이 경험한 데이터를 사용할 수 없음
+  - 여러번의 경험을 통해 $$\pi_0$$을 학습시켜 $$\pi_1$$으로 업데이트 했을 때, $$\pi_1$$을 학습시키려면 다시 경험을 쌓아야 함
+- Off-Policy의 경우 **다른 정책이 경험한 데이터를 학습에 사용**할 수 있음
+  - 여러번의 경험을 통해 $$\pi_0$$을 학습시켜 $$\pi_1$$으로 업데이트 했을 때, $$\pi_1$$을 학습시키기 위해 $$\pi_0$$이 경험한 데이터를 사용할 수 있음
+
+### 사람의 데이터로부터 학습 가능
+
+- 초기에는 랜덤 정책을 이용하기 때문에 이를 통해 얻는 데이터의 질이 매우 낮음
+- 따라서 **전문가(사람)가 만든 데이터를 이용**해 학습하면 초기의 무의미한 행동을 하는 단계를 빨리 벗어날 수 있음
+
+### 일대다, 다대일 학습이 가능
+
+- 단 1개의 정책이 쌓은 경험만을 가지고 여러개의 정책을 학습시킬 수 있음
+- 여러개의 정책이 쌓은 경험을 가지고 한개의 정책을 학습시킬 수도 있음
 
