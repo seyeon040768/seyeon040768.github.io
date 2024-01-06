@@ -111,7 +111,7 @@ class GridWorld():
         self.grid_height = len(grid)
         self.grid_width = len(grid[0])
 
-        self.y = 0
+        self.y = 2
         self.x = 0
 
     def step(self, a):
@@ -178,7 +178,7 @@ class QAgent():
             action_val = self.q_table[y, x, :]
             action = np.argmax(action_val)
         return action
-    
+
     def update_table(self, history):
         cum_reward = 0
         for transition in history[::-1]:
@@ -211,9 +211,9 @@ def main():
     grid = [
         [0, 0, 2, 0, 0, 0, 0],
         [0, 0, 2, 0, 0, 0, 0],
-        [0, 0, 2, 0, 2, 0, 1],
+        [0, 0, 2, 0, 2, 0, 0],
         [0, 0, 0, 0, 2, 0, 0],
-        [0, 0, 0, 0, 2, 0, 0]
+        [0, 0, 0, 0, 2, 0, 1]
     ]
     env = GridWorld(grid)
     agent = QAgent()
@@ -239,11 +239,11 @@ main()
 ### 학습 결과
 
 ```
-['→', '↓', '↑', '→', '→', '→', '↓']
-['↓', '↓', '↑', '→', '→', '↓', '↓']
-['→', '↓', '↑', '↑', '↑', '→', '↑']
-['→', '→', '→', '↑', '↑', '→', '↑']
-['→', '→', '↑', '↑', '↑', '↑', '↑']
+['↓', '→', '↑', '→', '↓', '←', '↓']
+['↓', '←', '↑', '→', '→', '→', '↓']
+['→', '↓', '↑', '↑', '↑', '↓', '↓']
+['→', '→', '→', '↑', '↑', '↓', '↓']
+['↓', '↑', '↑', '↓', '↑', '→', '↑']
 ```
 
 # 2. TD 컨트롤 1 - SARSA
@@ -261,7 +261,7 @@ $$
 \end{align}
 $$
 
-- 벨만 기대 방정식을 이용하여 계산식을 구할 수 있음
+- TD를 이용해 $$v$$ 대신 $$q$$를 업데이트
 
 $$
 \begin{align}
@@ -284,12 +284,16 @@ $$
 
 ### 라이브러리 import
 
+- 몬테카를로 컨트롤과 같음
+
 ``` python
 import random
 import numpy as np
 ```
 
 ### 환경 class
+
+- 몬테카를로 컨트롤과 같음
 
 ``` python
 class GridWorld():
@@ -298,7 +302,7 @@ class GridWorld():
         self.grid_height = len(grid)
         self.grid_width = len(grid[0])
 
-        self.y = 0
+        self.y = 2
         self.x = 0
 
     def step(self, a):
@@ -349,6 +353,8 @@ class GridWorld():
 
 ### 에이전트 class
 
+- `update_table` 함수만 수정
+
 ``` python
 class QAgent():
     def __init__(self):
@@ -396,9 +402,9 @@ def main():
     grid = [
         [0, 0, 2, 0, 0, 0, 0],
         [0, 0, 2, 0, 0, 0, 0],
-        [0, 0, 2, 0, 2, 0, 1],
+        [0, 0, 2, 0, 2, 0, 0],
         [0, 0, 0, 0, 2, 0, 0],
-        [0, 0, 0, 0, 2, 0, 0]
+        [0, 0, 0, 0, 2, 0, 1]
     ]
     env = GridWorld(grid)
     agent = QAgent()
@@ -422,11 +428,11 @@ main()
 ### 학습 결과
 
 ```
-['↓', '↓', '↑', '→', '→', '→', '↓']
-['↓', '↓', '↑', '→', '→', '→', '↓']
-['→', '↓', '↑', '↑', '↑', '→', '↑']
+['↓', '↓', '↑', '↓', '→', '→', '↓']
+['→', '↓', '↑', '→', '→', '↓', '↓']
+['↓', '↓', '↑', '↑', '↑', '↓', '↓']
+['→', '→', '→', '↑', '↑', '↓', '↓']
 ['→', '→', '→', '↑', '↑', '→', '↑']
-['→', '→', '→', '↑', '↑', '↓', '←']
 ```
 # 3. TD 컨트롤 2 - Q러닝
 - 처음으로 딥러닝과 결합되어 성과를 보여준 알고리즘
@@ -475,3 +481,199 @@ main()
 - 단 1개의 정책이 쌓은 경험만을 가지고 여러개의 정책을 학습시킬 수 있음
 - 여러개의 정책이 쌓은 경험을 가지고 한개의 정책을 학습시킬 수도 있음
 
+## Q러닝의 이론적 배경 - 벨만 최적 방정식
+
+$$
+\begin{align}
+& q_*(s, a) = \max_\pi q_\pi(s, a) \\
+& \pi_* = \underset{a}{\operatorname{argmax}} q_*(s^\prime, a^\prime)
+\end{align}
+$$
+
+- $$q_*$$를 알게 되는 순간 MDP에서 순간마다 최적의 행동을 선택하며 움직일 수 있음
+  - 따라서 **$$q_*$$를 찾는 것이 목표**
+
+$$
+\begin{align}
+& q_*(s, a) = r_s^a + \gamma \sum_{s^\prime \in S}P_{ss^\prime}^a \max_{a^\prime}q_*(s^\prime, a^\prime) \\
+& q_*(s, a) = \mathbb{E}_{s^\prime}[r + \gamma \max_{a^\prime}q_*(s^\prime, a^\prime)]
+\end{align}
+$$
+
+- TD 타깃: $$r + \gamma \underset{a^\prime}{\max}q_*(s^\prime, a^\prime)$$ 
+
+$$
+Q(S, A) = Q(S, A) + \alpha(R + \gamma \max_{A^\prime} Q(S^\prime, A^\prime) - Q(S, A))
+$$
+
+## SARSA vs Q러닝
+
+- SARSA: on-policy
+  - 행동 정책: $$\varepsilon-\textrm{Greedy}(Q)$$
+  - 타깃 정책: $$\varepsilon-\textrm{Greedy}(Q)$$
+  - 벨만 기대 방정식: $$q_\pi(s_t, a_t) = \mathbb{E}_\pi[r_{t+1} + \gamma q_\pi(s_{t+1}, a_{t+1})]$$
+- Q러닝: off-policy
+  - 행동 정책: $$\varepsilon-\textrm{Greedy}(Q)$$
+  - 타깃 정책: $$\textrm{Greedy}(Q)$$
+  - 벨만 최적 방정식: $$q_*(s, a) = \mathbb{E}_{s^\prime}[r + \gamma \underset{a^\prime}{\max}q_*(s^\prime, a^\prime)]$$
+- SARSA는 $$\mathbb{E}_\pi$$, Q러닝은 $$\mathbb{E}_{s^\prime}$$
+  - $$\mathbb{E}_\pi$$: **정책 함수 $$\pi$$를 따르는** 경로에 대한 기댓값
+    - 따라서 $$\mathbb{E}_\pi$$를 얻기 위해서는 반드시 $$\pi$$에 의한 액션 선택이 있어야 함
+  - $$\mathbb{E}_{s^\prime}$$: **상태가 $$s^\prime$$일 때**의 기댓값
+    - 따라서 $$\pi$$는 중요하지 않음
+
+## Q러닝 구현
+
+### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=N27hB-dGq5Lt)
+
+### 라이브러리 import
+
+- 몬테카를로 컨트롤과 같음
+
+``` python
+import random
+import numpy as np
+```
+
+### 환경 class
+
+- 몬테카를로 컨트롤과 같음
+
+``` python
+class GridWorld():
+    def __init__(self, grid):
+        self.grid = grid
+        self.grid_height = len(grid)
+        self.grid_width = len(grid[0])
+
+        self.y = 2
+        self.x = 0
+
+    def step(self, a):
+        if a == 0:
+            self.move_up()
+        elif a == 1:
+            self.move_down()
+        elif a == 2:
+            self.move_right()
+        elif a == 3:
+            self.move_left()
+
+        reward = -1
+        done = self.is_done()
+        return (self.y, self.x), reward, done
+
+    def move_up(self):
+        self.y -= 1
+        if self.y < 0 or self.grid[self.y][self.x] == 2:
+            self.y += 1
+
+    def move_down(self):
+        self.y += 1
+        if self.y > self.grid_height - 1 or self.grid[self.y][self.x] == 2:
+            self.y -= 1
+
+    def move_right(self):
+        self.x += 1
+        if self.x > self.grid_width - 1 or self.grid[self.y][self.x] == 2:
+            self.x -= 1
+
+    def move_left(self):
+        self.x -= 1
+        if self.x < 0 or self.grid[self.y][self.x] == 2:
+            self.x += 1
+
+    def is_done(self):
+        return self.grid[self.y][self.x] == 1
+
+    def get_state(self):
+        return (self.y, self.x)
+
+    def reset(self):
+        self.y = 0;
+        self.x = 0
+        return (self.y, self.x)
+```
+
+### 에이전트 class
+
+- `update_table` 함수와 `anneal_eps` 함수 수정
+
+``` python
+class QAgent():
+    def __init__(self):
+        self.q_table = np.zeros((5, 7, 4))
+        self.eps = 0.9
+        self.alpha = 0.1
+
+    def select_action(self, s):
+        y, x = s
+        coin = random.random()
+        if coin < self.eps:
+            action = random.randint(0, 3)
+        else:
+            action_val = self.q_table[y, x, :]
+            action = np.argmax(action_val)
+        return action
+
+    def update_table(self, transition):
+        s, a, r, s_prime = transition
+        y, x = s
+        next_y, next_x = s_prime
+
+        self.q_table[y, x, a] += self.alpha * (r + np.amax(self.q_table[next_y, next_x, :]) - self.q_table[y, x, a])
+
+    def anneal_eps(self):
+        self.eps -= 0.01
+        self.eps = max(self.eps, 0.2)
+
+    def show_table(self):
+        q_lst = self.q_table.tolist()
+        num2arrow = ['↑', '↓', '→', '←']
+        data = np.zeros((5, 7)).tolist()
+        for row_idx, row_val in enumerate(q_lst):
+            for col_idx, col_val in enumerate(row_val):
+                action = np.argmax(col_val)
+                data[row_idx][col_idx] = num2arrow[action]
+        print(*data, sep='\n')
+```
+
+### 메인 함수
+
+``` python
+def main():
+    grid = [
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 2, 0, 0],
+        [0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 2, 0, 1]
+    ]
+    env = GridWorld(grid)
+    agent = QAgent()
+
+    for n_epi in range(10000):
+        done = False
+
+        s = env.reset()
+        while not done:
+            a = agent.select_action(s)
+            s_prime, r, done = env.step(a)
+            agent.update_table((s, a, r, s_prime))
+            s = s_prime
+        agent.anneal_eps()
+
+    agent.show_table()
+
+main()
+```
+
+### 학습 결과
+
+```
+['↓', '↓', '↑', '↓', '↓', '↓', '↓']
+['↓', '↓', '↑', '→', '→', '↓', '↓']
+['↓', '↓', '↑', '↑', '↑', '↓', '↓']
+['→', '→', '→', '↑', '↑', '↓', '↓']
+['→', '↑', '↑', '↑', '↑', '→', '↑']
+```
