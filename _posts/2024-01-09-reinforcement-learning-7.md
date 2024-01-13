@@ -117,3 +117,224 @@ $$
 
 - $$r_{t+1} + \gamma v_\theta(s_{t+1})$$는 변수가 아닌 상수
 - 매 스텝마다 실시간 업데이트 가능
+
+# 2. 딥 Q러닝
+
+## 이론적 배경 - Q러닝
+
+$$
+\begin{align}
+& Q_*(s, a) = \mathbb{E}_{s^\prime} \left[ r + \gamma \underset{a^\prime}{\operatorname{max}}Q_*(s^\prime, a^\prime) \right] \\
+& Q(s, a) = Q(s, a) + \alpha (r + \gamma \underset{a^\prime}{\operatorname{max}} Q(s^\prime, a^\prime) - Q(s, a))
+\end{align}
+$$
+
+- Q러닝의 업데이트 수식
+
+$$
+L(\theta) = \mathbb{E} \left[ \left( r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a) \right)^2 \right]
+$$
+
+- $$Q_\theta(s, a)$$
+  - Q러닝의 테이블 업데이트 수식을 뉴럴넷으로 확장
+  - $$\theta$$는 뉴럴넷의 파라미터 벡터
+- $$r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime)$$를 정답으로 보고 추측치인 $$Q_\theta(s, a)$$와의 차이를 줄이는 방향으로 업데이트
+
+$$
+\theta^\prime = \theta + \alpha (r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a)) \nabla_\theta(s, a)
+$$
+
+- 이 식을 통해 $$Q_\theta(s, a)$$는 점점 $$Q_*(s, a)$$에 가까워짐
+- pytorch나 tensorflow 등의 라이브러리에서는 $$L(\theta)$$에 대한 그라디언트를 자동으로 계산하여 $$\theta$$를 업데이트 해주기 때문에 이 단계까지 직접 미분을 할 필요는 없음
+
+## 딥 Q러닝 pseudo code
+
+1. $$Q_\theta$$의 파라미터 $$\theta$$를 초기화
+2. 에이전트의 상태 $$s$$를 초기화($$s \larr s_0$$)
+3. 에피소드가 끝날 때까지 다음을 반복
+   1. $$Q_\theta$$에 대한 $$\varepsilon - \textrm{greedy}$$를 이용하여 액션 $$a$$를 선택
+   2. $$a$$를 실행하여 $$r$$과 $$s^\prime$$ 관측
+   3. $$s^\prime$$에서 $$Q_\theta$$에 대한 $$\textrm{greedy}$$를 이용하여 액션 $$a^\prime$$를 선택
+   4. $$\theta$$ 업데이트: $$\theta^\prime = \theta + \alpha (r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a)) \nabla_\theta(s, a)$$
+   5. $$s \larr s^\prime$$
+4. 에피소드가 끝나면 다시 2번으로 돌아가서 $$\theta$$가 수렴할 때까지 반복
+
+- 3-1: 실제 액션을 선택, 3-3: TD 타깃의 값을 계산하기 위한 액션을 선택
+
+## 익스피리언스 리플레이와 타깃 네트워크
+
+### 익스피리언스 리플레이(Experience Replay)
+
+- 에이전트의 **경험을 리플레이 버퍼에 쌓아 나중에 사용**하는 방법
+  - 하나의 상태전이 $$e_t$$는 $$(s_t, a_t, r_t, s_{t+1})$$로 표현 가능
+    - 상태 $$s_t$$에서 액션 $$a_t$$를 했더니 보상 $$r_t$$를 받고 다음 상태 $$s_{t+1}$$에 도달했다는 의미
+  - 이런 낱개의 데이터를 리플레이 버퍼에 저장
+    - 리플레이 버퍼: 가장 최근의 데이터 n개를 저장하는 버퍼
+  - 저장된 데이터 중 랜덤하게 뽑아 학습에 사용
+- 서로 다른 에피소드에서 발생한 여러 경험이 랜덤하게 선택되므로 데이터 사이의 상관성이 작아짐
+  - 따라서 효율적으로 학습 가능
+    - 서로 연관이 없기 때문에 데이터를 재사용 할 수 있음
+
+### 별도의 타깃 네트워크(Target Network)
+
+$$
+L(\theta) = \mathbb{E} \left[ \left( r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a) \right)^2 \right]
+$$
+
+- $$L(\theta)$$는 정답과 추측 사이의 차이이며, 이를 줄이는 방향으로 $$\theta$$가 업데이트 됨
+  - 하지만 정답인 $$r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime)$$는 $$\theta$$에 의존적이기 때문에 불안정적임
+- 이 문제를 해결하기 위해 **정답과 추측, 두 개의 네트워크**를 준비
+  - 우선 정답 네트워크의 파라미터를 고정($$\theta_t^-$$)
+  - 추측 네트워크의 파라미터를 학습시켜 업데이트
+  - 일정 주기마다 고정시킨 정답 네트워크의 파라미터를 추측 네트워크의 파라미터로 교체
+
+## DQN 구현
+
+- 환경: OpenAI Gym의 카트폴
+  - 카트를 잘 밀어서 막대가 넘어지지 않도록 균형을 잡는 문제
+  - 막대가 12도 이상 기울어지거나 카트가 범위 밖으로 넘어가면 종료
+  - 상태: (카트 위치, 카트 속도, 막대 각도, 막대 각속도)
+  - 보상: 스텝마다 +1
+- 에이전트
+  - 액션: 일정한 힘으로 왼쪽 또는 오른쪽
+
+### 라이브러리 import
+
+``` python
+import gym
+import collections
+import random
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+```
+
+### 하이퍼 파라미터 정의
+
+``` python
+learning_rate = 0.0005
+gamma = 0.98
+buffer_limit = 50000
+batch_size = 32
+```
+
+### 리플레이 버퍼 클래스
+
+``` python
+class ReplayBuffer():
+    def __init__(self):
+        self.buffer = collections.deque(maxlen=buffer_limit)
+
+    def put(self, transition):
+        self.buffer.append(transition)
+    
+    def sample(self, n):
+        mini_batch = random.sample(self.buffer, n)
+        s_lst, a_lst, r_lst, s_prime_lst, done_mask_lst = [], [], [], [], []
+    
+        for transition in mini_batch:
+            s, a, r, s_prime, done_mask = transition
+            s_lst.append(s)
+            a_lst.append([a])
+            r_lst.append([r])
+            s_prime_lst.append(s_prime)
+            done_mask_lst.append([done_mask]);
+    
+        return torch.tensor(s_lst, dtype=torch.float), torch.tensor(a_lst), torch.tensor(r_lst), torch.tensor(s_prime_lst, dtype=torch.float), torch.tensor(done_mask_lst)
+    
+    def size(self):
+        return len(self.buffer);
+```
+
+### Q 밸류 네트워크 클래스
+
+``` python
+class Qnet(nn.Module):
+    def __init__(self):
+        super(Qnet, self).__init__()
+        self.fc1 = nn.Linear(4, 128)
+        self.relu1 = nn.ReLU()
+        self.fc2 = nn.Linear(128, 128)
+        self.relu2 = nn.ReLU()
+        self.fc3 = nn.Linear(128, 2)
+
+    def forward(self, x):
+        fc1 = self.fc1(x)
+        relu1 = self.relu1(fc1)
+        fc2 = self.fc2(relu1)
+        relu2 = self.relu2(fc2)
+        fc3 = self.fc3(relu2)
+    
+        return fc3
+    
+    def sample_action(self, obs, epsilon):
+        out = self.forward(obs)
+        coin = random.random()
+        if coin < epsilon:
+            return random.randint(0, 1);
+        else:
+            return out.argmax().item()
+```
+
+### 학습
+
+``` python
+def train(q, q_target, memory, optimizer):
+    for i in range(10):
+        s, a, r, s_prime, done_mask = memory.sample(batch_size)
+
+        q_out = q(s)
+        q_a = q_out.gather(1, a)
+        max_q_prime = q_target(s_prime).max(1)[0].unsqueeze(1)
+        target = r + gamma * max_q_prime * done_mask
+        loss = F.smooth_l1_loss(q_a, target)
+    
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+```
+
+### 메인 함수
+
+``` python
+def main():
+    env = gym.make('CartPole-v1')
+    q = Qnet()
+    q_target = Qnet()
+    q_target.load_state_dict(q.state_dict())
+    memory = ReplayBuffer()
+
+    print_interval = 20
+    score = 0.0
+    optimizer = optim.Adam(q.parameters(), lr=learning_rate)
+
+    for n_epi in range(1000):
+        epsilon = max(0.01, 0.08 - 0.01 * (n_epi / 200))
+
+        s = env.reset()
+        done = False
+
+        while not done:
+            a = q.sample_action(torch.from_numpy(s).float(), epsilon)
+            s_prime, r, done, info = env.step(a)
+            done_mask = 0.0 if done else 1.0
+            memory.put((s, a, r / 100.0, s_prime, done_mask))
+            s = s_prime
+            score += r
+            
+        if memory.size() > 2000:
+            train(q, q_target, memory, optimizer)
+
+        if n_epi % print_interval == 0 and n_epi != 0:
+            q_target.load_state_dict(q.state_dict())
+            print("n_episode: {}, score: {:.1f}, n_buffer: {}, eps: {:.1f}%".format(n_epi, score / print_interval, memory.size(), epsilon * 100))
+            score = 0.0
+        
+        env.close()
+    
+    torch.save(Qnet().state_dict(), "./Qnet.pt")
+
+main()
+```
