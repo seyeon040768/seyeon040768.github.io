@@ -190,6 +190,8 @@ $$
 
 ## DQN 구현
 
+![카트폴](/assets/img/2024-01-09-reinforcement-learning-7/cartpole.gif)
+
 - 환경: OpenAI Gym의 카트폴
   - 카트를 잘 밀어서 막대가 넘어지지 않도록 균형을 잡는 문제
   - 막대가 12도 이상 기울어지거나 카트가 범위 밖으로 넘어가면 종료
@@ -197,6 +199,8 @@ $$
   - 보상: 스텝마다 +1
 - 에이전트
   - 액션: 일정한 힘으로 왼쪽 또는 오른쪽
+
+### [Colab 링크](https://colab.research.google.com/drive/1QErRB4fQwH_CAzBvbFOge4TLC_4KIJD3#scrollTo=0VeKLDIhy82n)
 
 ### 라이브러리 import
 
@@ -229,11 +233,11 @@ class ReplayBuffer():
 
     def put(self, transition):
         self.buffer.append(transition)
-    
+
     def sample(self, n):
         mini_batch = random.sample(self.buffer, n)
         s_lst, a_lst, r_lst, s_prime_lst, done_mask_lst = [], [], [], [], []
-    
+
         for transition in mini_batch:
             s, a, r, s_prime, done_mask = transition
             s_lst.append(s)
@@ -241,9 +245,9 @@ class ReplayBuffer():
             r_lst.append([r])
             s_prime_lst.append(s_prime)
             done_mask_lst.append([done_mask]);
-    
+
         return torch.tensor(s_lst, dtype=torch.float), torch.tensor(a_lst), torch.tensor(r_lst), torch.tensor(s_prime_lst, dtype=torch.float), torch.tensor(done_mask_lst)
-    
+
     def size(self):
         return len(self.buffer);
 ```
@@ -266,9 +270,9 @@ class Qnet(nn.Module):
         fc2 = self.fc2(relu1)
         relu2 = self.relu2(fc2)
         fc3 = self.fc3(relu2)
-    
+
         return fc3
-    
+
     def sample_action(self, obs, epsilon):
         out = self.forward(obs)
         coin = random.random()
@@ -290,7 +294,7 @@ def train(q, q_target, memory, optimizer):
         max_q_prime = q_target(s_prime).max(1)[0].unsqueeze(1)
         target = r + gamma * max_q_prime * done_mask
         loss = F.smooth_l1_loss(q_a, target)
-    
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -305,16 +309,19 @@ def main():
     q_target = Qnet()
     q_target.load_state_dict(q.state_dict())
     memory = ReplayBuffer()
+    best_q = (0, q.state_dict())
 
     print_interval = 20
     score = 0.0
     optimizer = optim.Adam(q.parameters(), lr=learning_rate)
 
-    for n_epi in range(1000):
+    for n_epi in range(10000):
         epsilon = max(0.01, 0.08 - 0.01 * (n_epi / 200))
 
         s = env.reset()
         done = False
+
+        score = 0.0
 
         while not done:
             a = q.sample_action(torch.from_numpy(s).float(), epsilon)
@@ -323,18 +330,24 @@ def main():
             memory.put((s, a, r / 100.0, s_prime, done_mask))
             s = s_prime
             score += r
-            
+
         if memory.size() > 2000:
             train(q, q_target, memory, optimizer)
 
+            if score > best_q[0]:
+                best_q = (score, q.state_dict())
+
         if n_epi % print_interval == 0 and n_epi != 0:
             q_target.load_state_dict(q.state_dict())
-            print("n_episode: {}, score: {:.1f}, n_buffer: {}, eps: {:.1f}%".format(n_epi, score / print_interval, memory.size(), epsilon * 100))
-            score = 0.0
-        
+            print("n_episode: {}, score: {:.1f}, n_buffer: {}, eps: {:.1f}%".format(n_epi, score, memory.size(), epsilon * 100))
+
         env.close()
-    
-    torch.save(Qnet().state_dict(), "./Qnet.pt")
+
+    torch.save(q.state_dict(), "./Qnet_final.pt")
+    torch.save(best_q[1], "./Qnet_best.pt")
 
 main()
 ```
+
+### 결과
+![카트폴](/assets/img/2024-01-09-reinforcement-learning-7/cartpole.gif)
