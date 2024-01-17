@@ -135,7 +135,7 @@ $$
 L(\theta) = \mathbb{E} \left[ \left( r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a) \right)^2 \right]
 $$
 
-- $$Q_\theta(s, a)$$
+- \$$Q_\theta(s, a)$$
   - Q러닝의 테이블 업데이트 수식을 뉴럴넷으로 확장
   - $$\theta$$는 뉴럴넷의 파라미터 벡터
 - $$r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime)$$를 정답으로 보고 추측치인 $$Q_\theta(s, a)$$와의 차이를 줄이는 방향으로 업데이트
@@ -150,13 +150,13 @@ $$
 ## 딥 Q러닝 pseudo code
 
 1. $$Q_\theta$$의 파라미터 $$\theta$$를 초기화
-2. 에이전트의 상태 $$s$$를 초기화($$s \larr s_0$$)
+2. 에이전트의 상태 $$s$$를 초기화($$s \leftarrow s_0$$)
 3. 에피소드가 끝날 때까지 다음을 반복
    1. $$Q_\theta$$에 대한 $$\varepsilon - \textrm{greedy}$$를 이용하여 액션 $$a$$를 선택
    2. $$a$$를 실행하여 $$r$$과 $$s^\prime$$ 관측
    3. $$s^\prime$$에서 $$Q_\theta$$에 대한 $$\textrm{greedy}$$를 이용하여 액션 $$a^\prime$$를 선택
    4. $$\theta$$ 업데이트: $$\theta^\prime = \theta + \alpha (r + \gamma \underset{a^\prime}{\operatorname{max}}Q_\theta(s^\prime, a^\prime) - Q_\theta(s, a)) \nabla_\theta(s, a)$$
-   5. $$s \larr s^\prime$$
+   5. \$$s \leftarrow s^\prime$$
 4. 에피소드가 끝나면 다시 2번으로 돌아가서 $$\theta$$가 수렴할 때까지 반복
 
 - 3-1: 실제 액션을 선택, 3-3: TD 타깃의 값을 계산하기 위한 액션을 선택
