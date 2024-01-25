@@ -75,7 +75,7 @@ typora-root-url: ../
 
 ### 와이파이 드라이버 설치 방법
 
-1. [이곳](http://archive.ubuntu.com/ubuntu/pool/universe/b/backport-iwlwifi-dkms/)에서 `.deb`로 끝나는 파일 중 최신 파일을 설치
+1. [이곳](https://bit.ly/3SxhuFB)에서 `.deb`로 끝나는 파일 중 최신 파일을 설치
 2. 터미널에서 `cd 경로` 명령어로 설치한 경로에 이동해 `sudo dpkg -i 파일이름`을 입력
    - 만약 에러가 발생하는 경우 `sudo apt install dkms libc6-dev libc-dev-bin`를 입력 후 `sudo apt --fix-broken install`를 입력
    - 이제 다시 `sudo dpkg -i 파일이름` 입력
@@ -134,7 +134,6 @@ typora-root-url: ../
    rosdep update
    ```
    
-
 9. ros 실행
 
    ``` bash
