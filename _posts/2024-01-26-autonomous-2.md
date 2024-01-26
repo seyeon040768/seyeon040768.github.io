@@ -8,7 +8,7 @@ pin: false
 math: true
 mermaid: false
 image:
-  path: /assets/img/2024-01-25-autonomous-1/autonomous.png
+  path: /assets/img/2024-01-26-autonomous-2/autonomous.png
   lqip: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAGzUExURZCZp46WpK63y6u3zTRBWCAuQEVVaFVuhXyUsLXE3fH7/93o95eis/f//6y1xYmXtpSer7jE2rLA2G19lXWGm4CSpXCInH6VsrrI4v///5ykspWfs623zEZbbmN6joqasb7J3a20xaKqvZejuerw/bCxu5uis4ORpcHI2aShqZKUo6asvI6NmZKSn52frIJ/jJKSnnB4hYuQmgAAAIaJlXKBj3N7ggAAADs9Q3N2goaYpBYdHwAAAAUGBiAiJhAQEF1dZJebpomNkwAAAAAAAAAAAAAAAAEAABUVF0BBR1FRWExNVFFSWVFSWCcoKQAAAEZUaURSZEVWZmhyiaWuw1xnf2Rrjj1MXlJjbWx/hWh7jV5nfpGaroJ/l4FtizpIWoNufZGFj25/kFpdb4KImZGLn3dmfU5RaFNXbktUZmN1hIeWpFNXY3F1gYCCknRugVFTZ0dPYkRQYWp0hJKVoHp+inF0gWlreGlocldYZFBRX2xtfnN4i5GUo3p8iGNlbmFmcj5HUis1QVRdbV9rfUBARWRjao6RoV1oeVRhc3V8jIyToJCTon+DkWZufH2Ckf///2AqHZYAAABQdFJOUwAAAAAAAAAAAAAAAAAAAAATX1l3gnlfQCcBav79/vfgUBa8yhg98PZRQPF5LuZ/E8f6YgyP3C1cmPy3G63B7Pz+/ZMmq7jJ3ez2+vTeqVEvf2jsRwAAAAFiS0dEGexutYgAAAAHdElNRQfoARkONxXR9ms/AAAApElEQVQI12NgYGRiZmFlY+fg5OJm4BEQFBIWERUTl5DkZeCTkpYJCAySlZNX4GdQVAoOCQ0Lj4iMUlZhUFWLjomNi09ITFLXYNDUSk5JTUvPyMzK1mbQ0c3JzcsvKCwqLtFj0DcoLSuvqKyqrjE0YjA2qa2rb2hsam4xNWMwt7BsbWvv6OzqtrJmsLG1s3fo6e3rd3RyZnBxdXP38PTy9vH18wcAxQkoOT1ZzCgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjQtMDEtMjVUMTQ6NTQ6MjQrMDA6MDC62pzNAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDI0LTAxLTI1VDE0OjU0OjI0KzAwOjAwy4ckcQAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyNC0wMS0yNVQxNDo1NToyMSswMDowMCFoQTcAAAAASUVORK5CYII=
   alt: autonomous
 typora-root-url: ../
@@ -156,10 +156,11 @@ catkin_create_pkg 패키지명 라이브러리 # 추천: catkin_create_pkg 패�
 
 ``` bash
 # 터미널 1
+catkin_make
 roscore
 ```
 
-- ros 실행
+- 빌드 후 ros 실행
 
 ``` bash
 # 터미널 2
@@ -177,7 +178,12 @@ rosrun 패키지명 sub.py
 
 ``` bash
 # 터미널 4
+rosrun rqt_graph rqt_graph
 rostopic echo topic_name
 ```
 
-- `topic_name`에서 오고가는 메시지 확인
+- `rosrun rqt_graph rqt_graph`: 모든 노드들과 이들 사이에 오고가는 토픽 확인
+
+  ![rqt_graph](/assets/img/2024-01-26-autonomous-2/rqt_graph.png)
+
+- `rostopic echo topic_name`: `topic_name`에서 오고가는 메시지 확인
