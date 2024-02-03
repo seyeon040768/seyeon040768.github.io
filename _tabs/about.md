@@ -23,3 +23,6 @@ order: 4
   - 자격증 \| cospro 1급(2023-10-23)
   - 수상 \| 한국정보처리학회 ICT 멘토링 학술대회 우수상(2023-11-03)
   - 자격증 \| 파이썬마스터 1급(2023-12-01)
+- 2024
+  - 수료증 | 홍정모의 따라하며 배우는 C++(2023-11-23 ~ 2024-01-24)
+  - 수료증 | Introduction to Computer Graphics with DirectX 11 - Part 1. Basic Concepts of Rendering(2024-01-26 ~ 2024-02-03)
