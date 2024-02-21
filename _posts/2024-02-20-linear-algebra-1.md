@@ -38,6 +38,7 @@ typora-root-url: ../
 - 벡터의 크기(길이)
 
   - 일반적으로 피타고라스의 정리를 이용해 계산
+  - \$\left\Vert\mathbf{v}\right\Vert=\sqrt{v_x^2 +v_y^2}$
   - $$\mathbf{a} = (1, 2)$$이면 원점에서 $$\left\Vert\mathbf{a}\right\Vert=\sqrt{1^2+2^2}=\sqrt{5}$$
 
 - 단위 벡터(unit vector): 크기가 1인 벡터
@@ -58,3 +59,38 @@ typora-root-url: ../
   - 다른 방법으로는 평행사변형법이 있음
 
     ![parallelogram](/assets/img/2024-02-20-linear-algebra-1/parallelogram.png){: w="50%" h="50%"}
+
+## 벡터의 스칼라 곱
+
+- 스칼라 값을 각 원소에 곱셈
+
+  - 예) $$(1, 2) \times 2 = (2, 4)$$
+
+- 기하적으로 벡터의 크기를 스칼라 배하는 것
+
+  ![vector_mul](/assets/img/2024-02-20-linear-algebra-1/vector_mul.png){: w="50%" h="50%"}
+
+# 포인트(point)
+
+- 말 그대로 '점'
+- 위치를 나타냄
+- $$P$$처럼 대문자로 표기
+
+# 벡터와 포인트의 연산
+
+- 벡터 + 벡터 = 벡터
+
+  ![vector_mul](/assets/img/2024-02-20-linear-algebra-1/vector_mul.png){: w="50%" h="50%"}
+
+- 포인트 + 벡터 = 포인트
+
+  ![point_plus_vec](/assets/img/2024-02-20-linear-algebra-1/point_plus_vec.png){: w="50%" h="50%"}
+
+  - \$A  + \mathbf{v} = B$
+
+- 포인트 - 포인트 = 벡트
+
+  ![point_plus_vec](/assets/img/2024-02-20-linear-algebra-1/point_plus_vec.png){: w="50%" h="50%"}
+
+  - \$B - A = \mathbf{v}$
+
