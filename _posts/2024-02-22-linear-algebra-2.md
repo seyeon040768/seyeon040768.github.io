@@ -36,7 +36,6 @@ typora-root-url: ../
 ## 선형 결합과 기저 벡터
 
 - 특정 벡터 공간에서 정의된 벡터를 표준 벡터 공간에서 알고 싶다면 해당 공간의 기저 벡터와 선형 결합을 하면 됨
-
 - 예)
 
   ![basis_uv](/assets/img/2024-02-22-linear-algebra-2/basis_uv.png){: w="50%" h="50%"}*$$\mathbf{u}$$와 $$\mathbf{v}$$가 이루는 벡터 공간*
