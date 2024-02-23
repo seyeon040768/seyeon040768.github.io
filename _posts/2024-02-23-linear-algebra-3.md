@@ -18,6 +18,7 @@ typora-root-url: ../
 # 행렬(matrix)
 
 - 행렬: 수를 행(row)과 열(column)에 맞춰 배열한 것
+
   $$
   \begin{bmatrix}
   1 & 2 & 3\\
@@ -139,7 +140,6 @@ typora-root-url: ../
 ## 전치 행렬(transpose)
 
 - 행렬의 행과 열을 교환한 행렬
-
   - 위첨자 $$T$$를 이용해 표기
     - 예) $$\mathbf{A}^T$$
   - $$y=-x$$ 그래프(주 대각선)를 기준으로 뒤집은 형태
@@ -170,7 +170,6 @@ $$
 $$
 
 - 주 대각 성분이 1이고 나머지는 0인 정사각행렬
-
 - $$\mathbf{I}$$로 표기
 - $$\mathbf{I} \times \mathbf{A}$$는 언제나 $$\mathbf{A}$$​
 
@@ -202,7 +201,6 @@ $$
 ## 선형 변환과 벡터 공간
 
 - 선형 변환의 조건
-
   - 선형 변환 전 벡터 공간과 후 벡터 공간의 원점은 일치해야 함
   - 선형성(직선)이 유지되어야 함
 
@@ -239,9 +237,7 @@ $$
   $$
 
   - 위와 같이 행으로 쌓는 형태
-
 - 이처럼 선형 변환을 계산하는 행렬을 **변환 행렬**이라함
-
 - 만약 row-major 변환 행렬을 column-major로 바꾸고 싶다면 전치 행렬을 구하면 됨
 
 ## 변환(회전, 이동, 스케일링)
@@ -279,9 +275,7 @@ $$
 ![rotate](/assets/img/2024-02-23-linear-algebra-3/rotate.png){: w="70%" h="70%"}
 
 - $$\mathbf{n}$$: 회전축, 단위 벡터
-
 - $$\mathbf{v}$$: 회전시킬 벡터
-
 - $$R_\mathbf{n}$$: $$\mathbf{n}$$을 기준으로 회전시키는 함수
   - 이를 수행하는 행렬을 찾는 것이 목표
   
@@ -365,14 +359,15 @@ $$
 ### 이동(transition)
 
 ![move](/assets/img/2024-02-23-linear-algebra-3/move.png){: w="50%" h="50%"}
+
 $$
 \begin{align*}&x^\prime=x+b_x\\&y^\prime=y+b_y\end{align*}
 $$
 
 
 - $$x$$를 $$b_x$$만큼, $$y$$를 $$b_y$$만큼 이동
-
 - 이동은 회전, 스케일링과 달리 선형 변환이 아님
+
   $$
   \begin{align*}
   \text{Function:}\quad&\tau(x, y, z) = (x + b_x, y + b_y, z + b_z) \\
