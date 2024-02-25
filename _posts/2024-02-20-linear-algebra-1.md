@@ -55,9 +55,12 @@ typora-root-url: ../
 
 ## 벡터의 스칼라 곱
 
+- 스칼라: 크기 정보만 가지는 값
+  
 - 스칼라 값을 각 원소에 곱셈
+  
   - 예) $$(1, 2) \times 2 = (2, 4)$$
-
+  
 - 기하적으로 벡터의 크기를 스칼라 배하는 것
 
   ![vector_mul](/assets/img/2024-02-20-linear-algebra-1/vector_mul.png){: w="50%" h="50%"}
