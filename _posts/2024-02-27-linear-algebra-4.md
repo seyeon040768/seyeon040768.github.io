@@ -47,7 +47,6 @@ $$
   \det{\left[\begin{matrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{matrix}\right]}=A_{11}\det{\left[A_{22}\right]}-A_{12}\det{\left[A_{21}\right]}=A_{11}A_{22}-A_{12}A_{21}
   $$
   
-
 - 3x3 이상 행렬의 determinant는 재귀적으로 계산
 
 ## 행렬식의 기하학적 의미
@@ -73,4 +72,21 @@ $$
     \det\mathbf{T}=4-0=4
     $$
 
-ㄴ
+![scaling1x](/assets/img/2024-02-27-linear-algebra-4/scaling1x.png){: w="50%" h="50%"}
+
+- $$x$$축 기저를 $$(2, 1)$$로, $$y$$축 기저를 $$(1, 1)$$로 변환
+
+  - 변환 행렬
+    $$
+    \mathbf{T}=
+    \begin{bmatrix}
+    2 & 1\\
+    1 & 1
+    \end{bmatrix}
+    $$
+
+  - 변환 행렬의 행렬식
+    $$
+    \det\mathbf{T}=2-1=1
+    $$
+
