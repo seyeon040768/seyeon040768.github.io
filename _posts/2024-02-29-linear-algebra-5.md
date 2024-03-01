@@ -21,7 +21,6 @@ typora-root-url: ../
   $$
   \mathbf{v}^\prime=\mathbf{v}\mathbf{T}
   $$
-  
 
 - 만약 변환된 벡터를 다시 표준 공간의 벡터로 변환하고 싶다면 변환 행렬의 역행렬을 이용할 수 있음
   $$
@@ -40,6 +39,25 @@ typora-root-url: ../
     - 3차원 -> 평면(2차원)
   - 이 경우 행렬식의 값은 0
   - 따라서 정리하면 행렬식이 0이면 역행렬을 구할 수 없음
+
+## 역행렬 구하기
+
+- 행렬식과 여인수 행렬, 수반 행렬을 이용해 구할 수 있음
+
+- Cofactor Matrix(여인수 행렬)
+  $$
+  \mathbf{C_A}=C_{ij}=(-1)^{i+j}\det{\mathbf{\bar{A}}*  {ij}}=\left[\begin{matrix} C*{11} & C_{12} & \dots & C_{1n} \\ C_{21} &   C_{22} & \dots & C_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ C_{n1}   & C_{n2} & \dots & C_{nn} \end{matrix}\right]
+  $$
+
+- Adjoint Matrix(수반 행렬)
+  $$
+  \mathbf{A}^\ast=\mathbf{C}_\mathbf{A}^T
+  $$
+
+- Inverse Matrix(역행렬)
+  $$
+  \mathbf{A}^{-1}=\frac{\mathbf{A}^\ast}{\det{\mathbf{A}}}
+  $$
 
 # 랭크(rank)
 
