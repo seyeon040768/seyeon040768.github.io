@@ -20,13 +20,70 @@ typora-root-url: ../
 ![inner_product](/assets/img/2024-03-03-linear-algebra-6/inner_product.png){: w="50%" h="50%"}
 $$
 \mathbf{u} \cdot \mathbf{v}
-=\left\Vert\mathbf{u}\sin{\theta}\right\Vert \left\Vert\mathbf{v}\right\Vert
-=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\sin{\theta}\right\Vert
+=\left\Vert\mathbf{u}\right\Vert\sin{\theta} \left\Vert\mathbf{v}\right\Vert
+=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\sin{\theta}
 =\mathbf{v} \cdot \mathbf{u}
 $$
 
 - 내적: 벡터($$\mathbf{u}$$)에서 다른 벡터($$\mathbf{v}$$)로 **투영한 벡터($$\mathbf{u}^\prime$$)의 길이**($$\left\Vert\mathbf{u}^\prime\right\Vert$$)와 **다른 벡터의 길이**($$\left\Vert\mathbf{v}\right\Vert$$)를 곱하는 연산
 - 점($$\cdot$$) 연산자 사용
 - 계산 순서가 바뀌어도 결과는 같음
-- 
 
+## 내적과 선형 변환
+
+- 벡터를 다른 벡터에 투영한 벡터의 길이를 선형 변환을 이용해 구할 수 있음
+  - 벡터를 넣어 스칼라 값(1차원 벡터)이 나오는 선형 변환
+
+![inner_product](/assets/img/2024-03-03-linear-algebra-6/inner_product.png){: w="50%" h="50%"}
+
+- $$\mathbf{u}$$를 $$\mathbf{v}$$에 투영하는 것을 $$\mathbf{u}$$가 포함된 표준 공간을 $$\mathbf{v}$$​방향의 직선 공간으로 압축하는 것으로 생각할 수 있음
+  - 여기서 $$\mathbf{v}$$방향의 직선 공간을 1차원 공간으로 생각하면 $$\mathbf{u}^\prime$$​의 길이를 간단하게 구할 수 있음
+
+### $$\mathbf{v}$$가 단위 벡터인 경우
+
+![inner_product_linear_transformation](/assets/img/2024-03-03-linear-algebra-6/inner_product_linear_transformation.png)
+
+- 표준 기저 벡터를 $$\mathbf{v}$$​방향의 직선 공간에 투영한 벡터의 길이를 구하는 과정
+
+  - 표준 기저 벡터의 투영된 벡터를 2차원으로 표현하는 대신 1차원($$\mathbf{v}$$​방향의 직선)으로 생각
+  - 따라서 새로운 기저 $$\mathbf{i}^\prime = \hat{\mathbf{v}}_x$$, $$\mathbf{j}^\prime = \hat{\mathbf{v}}_y$$를 계산
+
+- $$\mathbf{u}=(x, y)$$를 $$\hat{\mathbf{v}}$$에 투영하면 $$\mathbf{u}^\prime=x\mathbf{i}^\prime + y\mathbf{j}^\prime$$
+
+  - 선형 변환은 기저 벡터들에 의해 결정되기 때문에 이러한 계산이 성립
+
+  - $$\mathbf{u}^\prime$$는 1차원 벡터이므로 $$\hat{\mathbf{v}}$$에 투영된 $$\mathbf{u}$$​​의 길이와 같음
+    $$
+    \hat{\mathbf{v}}\cdot\mathbf{u}=x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y
+    $$
+
+    - 투영된 길이에 $$\hat{\mathbf{v}}$$의 길이를 곱해야 하지만 단위 행렬(길이가 1)이므로 생략
+
+### $$\mathbf{v}$$가 단위 벡터가 아닌 경우
+
+- $$\mathbf{v}$$가 단위 벡터가 아닌 경우에는 단위 벡터인 경우의 계산법($$\hat{\mathbf{v}}\cdot\mathbf{u}=x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y$$)에 $$\mathbf{v}$$의 길이를 곱해주면 됨
+
+- $$\mathbf{v}$$의 길이를 $$n$$이라 하면
+  $$
+  \begin{align*}
+  \mathbf{v}\cdot\mathbf{u}
+  &=(x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y)n\\
+  &=x\hat{\mathbf{v}}_xn+y\hat{\mathbf{v}}_yn\\
+  &=x(\hat{\mathbf{v}}_xn)+y(\hat{\mathbf{v}}_yn)\\
+  &=x\mathbf{v}_x+y\mathbf{v}_y
+  \end{align*}
+  $$
+
+  - 삼각형에서 빗면의 길이가 $$n$$​배 늘어나면 밑면과 높이의 길이도 $$n$$​배 늘어나므로 위와 같이 표현 가능
+
+$$
+\mathbf{u}\cdot\mathbf{v}=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\sin{\theta}=\mathbf{u}_x\mathbf{v}_x+\mathbf{u}_y\mathbf{v}_y=[\mathbf{u}_x\;\mathbf{u}_y]\begin{bmatrix}\mathbf{u}_x\\\mathbf{u}_y\end{bmatrix}
+$$
+
+
+
+## 내적의 성질
+- 두 벡터가 이루는 각에 따라 부호가 달라짐
+  - $$\lt 90^\degree$$: 양수($$+$$​)
+  - $$= 90^\degree$$: 0
+  - $$\gt 90^\degree$$: 음수($$-$$)
