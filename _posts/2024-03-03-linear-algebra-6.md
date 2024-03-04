@@ -14,3 +14,19 @@ image:
   
 typora-root-url: ../
 ---
+
+# 내적(inner product)
+
+![inner_product](/assets/img/2024-03-03-linear-algebra-6/inner_product.png){: w="50%" h="50%"}
+$$
+\mathbf{u} \cdot \mathbf{v}
+=\left\Vert\mathbf{u}\sin{\theta}\right\Vert \left\Vert\mathbf{v}\right\Vert
+=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\sin{\theta}\right\Vert
+=\mathbf{v} \cdot \mathbf{u}
+$$
+
+- 내적: 벡터($$\mathbf{u}$$)에서 다른 벡터($$\mathbf{v}$$)로 **투영한 벡터($$\mathbf{u}^\prime$$)의 길이**($$\left\Vert\mathbf{u}^\prime\right\Vert$$)와 **다른 벡터의 길이**($$\left\Vert\mathbf{v}\right\Vert$$)를 곱하는 연산
+- 점($$\cdot$$) 연산자 사용
+- 계산 순서가 바뀌어도 결과는 같음
+- 
+
