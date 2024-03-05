@@ -57,6 +57,7 @@ $$
   - 선형 변환은 기저 벡터들에 의해 결정되기 때문에 이러한 계산이 성립
 
   - $$\mathbf{u}^\prime$$는 1차원 벡터이므로 $$\hat{\mathbf{v}}$$에 투영된 $$\mathbf{u}$$​​의 길이와 같음
+
     $$
     \hat{\mathbf{v}}\cdot\mathbf{u}=x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y
     $$
@@ -68,6 +69,7 @@ $$
 - $$\mathbf{v}$$가 단위 벡터가 아닌 경우에는 단위 벡터인 경우의 계산법($$\hat{\mathbf{v}}\cdot\mathbf{u}=x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y$$)에 $$\mathbf{v}$$의 길이를 곱해주면 됨
 
 - $$\mathbf{v}$$의 길이를 $$n$$이라 하면
+
   $$
   \begin{align*}
   \mathbf{v}\cdot\mathbf{u}
@@ -88,9 +90,9 @@ $$
 
 ## 내적의 성질
 - 두 벡터가 이루는 각에 따라 부호가 달라짐
-  - $$\lt 90^\degree$$: 양수($$+$$​)
-  - $$= 90^\degree$$: 0
-  - $$\gt 90^\degree$$: 음수($$-$$)
+  - $$\lt 90^\circ$$: 양수($$+$$​)
+  - $$= 90^\circ$$: 0
+  - $$\gt 90^\circ$$: 음수($$-$$)
 
 # 외적(cross product)
 
@@ -126,7 +128,7 @@ $$
 ## 외적이 만드는 벡터의 의미
 
 - 내적과 다르게 외적의 결과는 벡터
-![Cross-product-right-hand_rule](/assets/img/2024-03-03-linear-algebra-6/Cross-product-right-hand_rule.png){: w="50%" h="50%"}*By MikeRun - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=116897682*
+![Cross-product-right-hand_rule](/assets/img/2024-03-03-linear-algebra-6/Cross-product-right-hand_rule.png){: w="75%" h="75%"}*By MikeRun - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=116897682*
 
 - 외적은 두 벡터와 수직인 벡터를 계산
   - 위 그림처럼 오른손의 법칙을 이용해 어느 방향으로 수직인지 알 수 있음
