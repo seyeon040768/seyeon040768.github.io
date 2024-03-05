@@ -1,5 +1,5 @@
 ---
-title: 선형대수학 for Graphics Chapter 6. 벡터의 내적
+title: 선형대수학 for Graphics Chapter 6. 벡터의 내적과 외적
 author: seyeon
 date: 2024-03-03 01:00:00 +0900
 categories: [Math, Linear Algebra]
@@ -20,8 +20,8 @@ typora-root-url: ../
 ![inner_product](/assets/img/2024-03-03-linear-algebra-6/inner_product.png){: w="50%" h="50%"}
 $$
 \mathbf{u} \cdot \mathbf{v}
-=\left\Vert\mathbf{u}\right\Vert\sin{\theta} \left\Vert\mathbf{v}\right\Vert
-=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\sin{\theta}
+=\left\Vert\mathbf{u}\right\Vert\cos{\theta} \left\Vert\mathbf{v}\right\Vert
+=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\cos{\theta}
 =\mathbf{v} \cdot \mathbf{u}
 $$
 
@@ -46,7 +46,11 @@ $$
 - 표준 기저 벡터를 $$\mathbf{v}$$​방향의 직선 공간에 투영한 벡터의 길이를 구하는 과정
 
   - 표준 기저 벡터의 투영된 벡터를 2차원으로 표현하는 대신 1차원($$\mathbf{v}$$​방향의 직선)으로 생각
-  - 따라서 새로운 기저 $$\mathbf{i}^\prime = \hat{\mathbf{v}}_x$$, $$\mathbf{j}^\prime = \hat{\mathbf{v}}_y$$를 계산
+  - 따라서 새로운 기저 $$\mathbf{i}^\prime = \hat{\mathbf{v}}_x$$, $$\mathbf{j}^\prime = \hat{\mathbf{v}}_y$$​를 계산
+
+> 참고로 위와 같이 어떤 구조를 뒤집어서 생각하는 것을 duality라고 함
+> ($$\hat{\mathbf{v}}$$ 방향의 직선 공간으로 투영한 기저를 구할 때, 역으로 $$\hat{\mathbf{v}}$$를 기저에 투영하여 대칭을 이용함)
+{: .prompt-tip}
 
 - $$\mathbf{u}=(x, y)$$를 $$\hat{\mathbf{v}}$$에 투영하면 $$\mathbf{u}^\prime=x\mathbf{i}^\prime + y\mathbf{j}^\prime$$
 
@@ -77,7 +81,7 @@ $$
   - 삼각형에서 빗면의 길이가 $$n$$​배 늘어나면 밑면과 높이의 길이도 $$n$$​배 늘어나므로 위와 같이 표현 가능
 
 $$
-\mathbf{u}\cdot\mathbf{v}=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\sin{\theta}=\mathbf{u}_x\mathbf{v}_x+\mathbf{u}_y\mathbf{v}_y=[\mathbf{u}_x\;\mathbf{u}_y]\begin{bmatrix}\mathbf{u}_x\\\mathbf{u}_y\end{bmatrix}
+\mathbf{u}\cdot\mathbf{v}=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\cos{\theta}=\mathbf{u}_x\mathbf{v}_x+\mathbf{u}_y\mathbf{v}_y=[\mathbf{u}_x\;\mathbf{u}_y]\begin{bmatrix}\mathbf{u}_x\\\mathbf{u}_y\end{bmatrix}
 $$
 
 
@@ -87,3 +91,43 @@ $$
   - $$\lt 90^\degree$$: 양수($$+$$​)
   - $$= 90^\degree$$: 0
   - $$\gt 90^\degree$$: 음수($$-$$)
+
+# 외적(cross product)
+
+- $$\mathbf{u} \times \mathbf{v}=\mathbf{n}$$: $$\mathbf{u}$$와 $$\mathbf{v}$$를 외적
+- 크로스 연산자($$\times$$​)를 사용
+- 외적의 결과는 **벡터**
+
+## 외적과 평행사변형
+
+![cross_product_parallogram](/assets/img/2024-03-03-linear-algebra-6/cross_product_parallogram.png){: w="50%" h="50%"}
+
+- $$\left\Vert\mathbf{u} \times \mathbf{v}\right\Vert=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\sin{\theta}$$: 외적의 결과 벡터의 길이는 $$\sin$$​을 이용해 계산 가능
+  - $$\theta$$는 $$\mathbf{u}$$에서 $$\mathbf{v}$$로의 반시계 방향 각
+- 외적의 절대값
+  - 두 벡터가 이루는 평행사변형의 넓이를 의미
+- 부호
+  - 두 벡터가 이루는 각(작은 각)을 기준으로
+  - $$\mathbf{u}$$가 $$\mathbf{v}$$보다 시계 방향에 있으면 $$+$$
+  - $$\mathbf{u}$$가 $$\mathbf{v}$$보다 반시계 방향에 있으면 $$-$$
+- 따라서 외적은 곱하는 순서가 변함에 따라 부호가 바뀜
+
+### 외적과 행렬식(2차원)
+
+- $$\mathbf{i}$$가 $$\mathbf{u}$$로, $$\mathbf{j}$$가 $$\mathbf{v}$$로 기저 변환 되었다고 생각하면 행렬식을 통해 평행사변형의 넓이 계산 가능
+  $$
+  \begin{vmatrix}
+  2 & -1\\
+  1 & 1
+  \end{vmatrix}=3
+  $$
+  
+
+## 외적이 만드는 벡터의 의미
+
+- 내적과 다르게 외적의 결과는 벡터
+![Cross-product-right-hand_rule](/assets/img/2024-03-03-linear-algebra-6/Cross-product-right-hand_rule.png){: w="50%" h="50%"}*By MikeRun - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=116897682*
+
+- 외적은 두 벡터와 수직인 벡터를 계산
+  - 위 그림처럼 오른손의 법칙을 이용해 어느 방향으로 수직인지 알 수 있음
+
