@@ -45,8 +45,8 @@ typora-root-url: ../
   - $$a_i$$: 자연수 $$n$$을 구성하는 $$i$$번째 숫자($$i \ge 0$$), $$a_i\in\mathbb{N}\cup\{0\}$$, $$0\le a_i\lt b$$
   - $$k$$: 자릿수
   - 예)
-    - \$589_{10}=5\times 10^2 + 8\times 10^1 + 9\times 10^0$$
-    - \$1110_2 = 1 \times 2^3 + 1 \times 2^2 + 1 \times 2^1 + 0 \times 2^0$$
+    - 10진수: $$589_{10}=5\times 10^2 + 8\times 10^1 + 9\times 10^0$$
+    - 2진수: $$1110_2 = 1 \times 2^3 + 1 \times 2^2 + 1 \times 2^1 + 0 \times 2^0$$
 
 - 정수(integer): $$\mathbb{Z}$$
 
@@ -80,8 +80,8 @@ typora-root-url: ../
   - $$a_i$$: 실수 $$r$$을 구성하는 $$i$$번째 숫자($$i \in \mathbb{Z}$$), $$a_i\in\mathbb{Z}$$, $$0\le a_i\lt b$$
   - $$k$$: 자릿수
   - 예)
-    - \$123.45_{10}=1\times10^2+2\times10^1+3\times10^0+4\times10^{-1}+5\times10^{-2}$$
-    - \$10.101_2=1\times2^1+0\times2^0+1\times2^{-1}+0\times2^{-2}+1\times2^{-3}$$
+    - 10진수: $$123.45_{10}=1\times10^2+2\times10^1+3\times10^0+4\times10^{-1}+5\times10^{-2}$$
+    - 2진수: $$10.101_2=1\times2^1+0\times2^0+1\times2^{-1}+0\times2^{-2}+1\times2^{-3}$$
 
 - 복소수(complex number): $$\mathbb{C}$$
 
@@ -94,7 +94,7 @@ typora-root-url: ../
     - 곱셈: $$(a + bi)(c + di) = ac + adi + bci + bdi^2 = (ac - bd) + (ad + bc)i$$
     - 나눗셈: $$\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{(c + di)(c - di)} = \frac{ac - adi + bci + bd}{c^2 - cdi + cdi + d^2} = \left( \frac{ac + bd}{c^2 + d^2} \right) + \left( \frac{bc - ad}{c^2 + d^2} \right)i$$ (단, $$c+di\neq0$$)
 
-# 수의 연산
+# 2. 수의 연산
 
 ## 연산의 성질
 
@@ -123,9 +123,9 @@ typora-root-url: ../
 
   - $$a, b \notin \mathbb{I}$$이고 연산자 $$O$$에 대해 닫여 있을 때, 모든 수 $$a$$에 대하여 $$a\;O\;b = b\;O\;a = a$$를 만족하는 $$b$$
   - 합에 대한 항등원: 0
-    - $$a + 0 = 0 + a = a$$
+    - $$a + 0 = 0 + a = a$$를 만족
   - 곱에 대한 항등원: 1
-    - $$a \times 1 = 1 \times a = a$$
+    - $$a \times 1 = 1 \times a = a$$를 만족
 
 - 역원(inverse element)
 
@@ -140,15 +140,16 @@ $$
 $$
 
 - 합 연산의 성질
+
   $$
   \begin{align*}
   &\sum_{i=1}^{n} c = nc \\
   &\sum_{i=1}^{n} cx_i = c \sum_{i=1}^{n} x_i \\
   &\sum_{i=1}^{n} (x_i + y_i) = \sum_{i=1}^{n} x_i + \sum_{i=1}^{n} y_i \\
   &\sum_{i=1}^{n} x_i = \sum_{i=1}^{k} x_i + \sum_{i=k+1}^{n} x_i \quad (\text{where } 1 \leq k < n)
-  \end{align*}
+  \end{align*}
   $$
-   
+  
 
 ## 곱 연산
 
@@ -157,15 +158,17 @@ $$
 $$
 
 - 곱 연산의 성질
+
   $$
   \begin{align*}
   &\prod_{i=1}^{n} c = c^n \\
   &\prod_{i=1}^{n} x_i y_i = \prod_{i=1}^{n} x_i \times \prod_{i=1}^{n} y_i \\
   &\prod_{i=1}^{n} x_i = \prod_{i=1}^{k} x_i \times \prod_{i=k+1}^{n} x_i \quad (\text{where } 1 \leq k < n)
-  \end{align*}
+  \end{align*}
   $$
-
+  
 - 펙토리얼(factorial)
+
   $$
   n!=1\times2\times3\times\cdots\times n=\prod_{i=1}^n i
   $$
@@ -186,9 +189,118 @@ $$
     - $$d\mid m$$이면, $$d\mid mn$$
     - $$a\mid b$$이고 $$b\mid c$$이면, $$a\mid c$$
 - 몫을 구하는 연산: $$\text{div}$$
-  - \$q = n\;\text{div}\;d$$
+  - 사용법: $$q = n\;\text{div}\;d$$
 - 나머지를 구하는 연산: $$\text{mod}$$
-  - \$r=n\;\text{mod}\;d$$
+  - 사용법: $$r=n\;\text{mod}\;d$$
 
-# 진법별 표현
+# 3. 진법별 표현
 
+- 10진법
+
+  $$
+  n_{10} = a_k10^k + a_{k-1}10^{k-1}+\cdots+a_1 10^1+a_0 10^0 \; ((a_ka_{k-1}...a_1a_0)_{10})
+  $$
+  
+  - 10을 기수로 사용
+  - 0~9를 이용해 표현
+- 2진법
+
+  $$
+  n_{10} = b_k2^k + b_{k-1}2^{k-1}+\cdots+b_1 2^1+b_0 2^0 \; ((b_kb_{k-1}...b_1b_0)_2)
+  $$
+  
+  - 2를 기수로 사용
+  - 0과 1을 이용해 표현
+- 8진법
+
+  $$
+  n_{10} = o_k8^k + o_{k-1}8^{k-1}+\cdots+o_1 8^1+o_0 8^0 \; ((o_ko_{k-1}...o_1o_0)_8)
+  $$
+
+  - 8을 기수로 사용
+  - 0~7을 이용해 표현
+- 16진법
+
+  $$
+  n_{10} = x_k16^k + x_{k-1}16^{k-1}+\cdots+x_1 16^1+x_0 16^0 \; ((x_kx_{k-1}...x_1x_0)_16)
+  $$
+  
+  - 16을 기수로 사용
+  - 0~9와 A(10), B(11), C(12), D(13), E(14), F(15)를 이용해 표기
+
+# 진법 간 변환
+
+## 10진수 → 2진수 / 8진수 / 16진수
+
+- 10진수 정수부
+  - 몫이 0이 될 때까지 변환하려는 기수로 나누면서 각 단계마다 나머지를 나열
+  - 가장 먼저 얻은 나머지부터 낮은 자릿수에 배치
+
+- 10진수 소수부(소수점 밑)
+  - 소수부0이 될 때까지 변환하려는 기수로 곱하면서 각 단계마다 정수부를 나열
+    - 각 단계마다 정수부는 0으로 초기화
+  - 가장 먼저 얻은 정수부부터 소수점 밑에 가깝게 배치
+
+- 예)
+  - $$83.125_{10}$$를 2진수로 변환
+    - 정수부: $$83$$
+
+      ![83.125_binary_integer](/assets/img/2024-03-06-discrete-mathemathics-1/83.125_binary_integer.png)
+
+    - 소수부: $$125$$
+
+      ![83.125_binary_float](/assets/img/2024-03-06-discrete-mathemathics-1/83.125_binary_float.png)
+
+    - 결과: $$82.125_{10}=1010011.001_2$$
+
+
+## 2진수 ↔ 8진수 / 16진수
+
+- 2진수 → 8진수
+  - 3자리($$2^3=8$$​)씩 끊어서 변환
+  - 예)
+    - $$1010011.001_2$$를 8진수로 변환
+
+      ![b2o](/assets/img/2024-03-06-discrete-mathemathics-1/b2o.png)
+
+- 8진수 → 2진수
+  - 각 자리 숫자를 2진수로 변환
+  - 예)
+    - $$123.1_8$$을 2진수로 변환
+
+      ![o2b](/assets/img/2024-03-06-discrete-mathemathics-1/o2b.png)
+
+- 2진수 → 16진수
+  - 4자리($$2^4=16$$)씩 끊어서 변환
+  - 예)
+    - $$1010011.001_2$$를 16진수로 변환
+
+      ![b2x](/assets/img/2024-03-06-discrete-mathemathics-1/b2x.png)
+
+- 16진수 → 2진수
+  - 각 자리 숫자를 2진수로 변환
+  - 예)
+    - $$53.2_{16}$$를 2진수로 변환
+
+      ![x2b](/assets/img/2024-03-06-discrete-mathemathics-1/x2b.png)
+
+# 5. 진법 별 사칙연산
+
+- 10진수를 더하는 방법과 같음
+  - 단지 진법이 변했을 뿐
+- 예)
+  - $$1101_2 \times 101_2$$ (2진수 곱셈)
+
+    ![1011times101](/assets/img/2024-03-06-discrete-mathemathics-1/1011times101.png)
+
+  - $$10110011_2 \div 101_2$$ (2진수 나눗셈)
+
+    ![10110011div101](/assets/img/2024-03-06-discrete-mathemathics-1/10110011div101.png)
+
+  - $$46_8 \times 13_8$$ (8진수 곱셈)
+
+    ![46times13](/assets/img/2024-03-06-discrete-mathemathics-1/46times13.png)
+
+  - $$\text{B}\text{A}3_{16} \div 4\text{C}_{16}$$ (16진수 나눗셈)
+
+    ![BA3div4C](/assets/img/2024-03-06-discrete-mathemathics-1/BA3div4C.png)
