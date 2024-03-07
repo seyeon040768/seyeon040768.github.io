@@ -133,3 +133,49 @@ $$
 - 외적은 두 벡터와 수직인 벡터를 계산
   - 위 그림처럼 오른손의 법칙을 이용해 어느 방향으로 수직인지 알 수 있음
 
+### 증명
+
+- 외적을 계산할 벡터 $$\mathbf{u}=(u_x, u_y, u_z)$$, $$\mathbf{v}=(v_x, v_y, v_z)$$와 임의의 벡터 $$\mathbf{a} = (x, y, z)$$로 구성된 행렬 $$\mathbf{M}$$에 대하여
+
+  $$
+  \mathbf{M}=\begin{bmatrix}
+  x & y & z\\
+  u_x & u_y & u_z\\
+  v_x & v_y & v_z
+  \end{bmatrix}
+  $$
+  
+  - $$\det{\mathbf{M}}$$는 $$\mathbf{u}$$, $$\mathbf{v}$$, $$\mathbf{a}$$가 이루는 평행육면체(parallelepiped)의 부피의 절대값을 의미
+  
+  $$
+  \begin{align*}
+  \mathbf{p}\cdot\mathbf{a}
+  =
+  \begin{bmatrix}
+  p_x & p_y & p_z
+  \end{bmatrix}
+  \cdot
+  \begin{bmatrix}
+  x & y & z
+  \end{bmatrix}
+  &=
+  \begin{vmatrix}
+  x & y & z\\
+  u_x & u_y & u_z\\
+  v_x & v_y & v_z
+  \end{vmatrix}\\
+  &=x(u_yv_z-u_zv_y)-y(u_zv_x-u_xv_z)+z(u_xv_y-u_yv_x)\\
+  &=p_xx+p_yy+p_zz
+  \end{align*}
+  $$
+  
+  $$
+  \begin{align*}
+  \therefore \;
+  &p_x=u_yv_z-u_zv_y\\
+  &p_y=u_xv_z-u_zv_x\\
+  &p_z=u_xv_y-u_yv_x
+  \end{align*}
+  $$
+  
+  
