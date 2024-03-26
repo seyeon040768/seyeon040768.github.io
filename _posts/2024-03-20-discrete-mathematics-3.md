@@ -1,7 +1,7 @@
 ---
-title: 이산수학 2. 명제와 논리
+title: 이산수학 3. 명제와 논리
 author: seyeon
-date: 2024-03-20 01:00:00 +0900
+date: 2024-03-26 01:00:00 +0900
 categories: [Math, Discrete Mathematics]
 tags: [discrete]
 pin: false
@@ -403,22 +403,11 @@ $$
        - 예: 2는 4와 동등하고 4는 6과 동등하다면, 2는 6과 동등하다.
   
     5. **일반화된 패턴을 사용하여 결론을 도출하는 추론.**
-       
        - 예: 모든 포유류는 동물이다. 고양이는 포유류이다. 따라서 고양이는 동물이다.
     6. **A면 B이다. A는 참이다. 그러므로 B는 참이다.**
        - 예: 철수가 성인이면 철수는 주민등록증이 있다., 철수는 성인이다. 따라서 철수는 주민등록증이 있다.
-       - 추론
-       
-         $$
-         \begin{align*}
-         & p \rightarrow q\\
-         & p\\
-         & \;\;\;\;\therefore q
-         \end{align*}
-         $$
-         
        - 진리표
-    
+
          $$
          \begin{array}{|c c|c|}
          p\rightarrow q & p & q\\
@@ -431,23 +420,22 @@ $$
          $$
        
          - 두 전제 $$p \rightarrow q$$와 $$p$$가 $$T$$일 때, 결론 $$q$$는 $$T$$​
-         - 따라서 추론은 유효
+         - 따라서 결론이 참
        
+       - 증명
+       
+         $$
+         \begin{align*}
+         & p \rightarrow q\\
+         & p\\
+         & \;\;\;\;\therefore q
+         \end{align*}
+         $$
   
 - 허위 추론(fallacious inference)
   - 진리값이 참인 전제를 이용해 유도한 결론이 거짓인 추론
   - 예)
     - 철수가 중학생이면 청소년이다. 철수는 청소년이다. 따라서 철수는 중학생이다.
-    - 추론
-    
-      $$
-      \begin{align*}
-      & p \rightarrow q\\
-      & q\\
-      & \;\;\;\;\therefore p
-      \end{align*}
-      $$
-      
     - 진리표
 
       $$
@@ -463,124 +451,15 @@ $$
 
       - 두 전제 $$p \rightarrow q$$와 $$q$$가 $$T$$일 때, 결론 $$p$$는 $$T$$이거나 $$F$$
 
-      - 따라서 추론은 허위
+      - 따라서 결론이 거짓
     
+    - 증명
+    
+      $$
+      \begin{align*}
+      & p \rightarrow q\\
+      & q\\
+      & \;\;\;\;\therefore p
+      \end{align*}
+      $$
 
-## 논리적 추론법칙
-
-### 논리곱(conjunction)
-
-- 추론
-  $$
-  \begin{align*}
-  & p\\
-  & q\\
-  & \;\;\;\;\therefore p \land q
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  (p \land q) \rightarrow (p\land q)
-  $$
-
-### 선언적 부가(disjunctive addition)
-
-- 추론
-  $$
-  \begin{align*}
-  & p\\
-  & \;\;\;\;\therefore p \lor q
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  p \rightarrow (p \lor q)
-  $$
-
-### 단순화(simplication)
-
-- 추론
-  $$
-  \begin{align*}
-  & p \land q\\
-  & \;\;\;\;\therefore p(\text{or}\;q)
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  (p \land q) \rightarrow p(\text{or}\;q)
-  $$
-  
-### 긍정논법(modus ponens)
-
-- 추론
-  $$
-  \begin{align*}
-  & p\\
-  & p \rightarrow q\\
-  & \;\;\;\;\therefore q
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  \left\{ p \land (p \rightarrow q) \right\} \rightarrow q
-  $$
-  
-### 부정논법(modus tollens)
-
-- 추론
-  $$
-  \begin{align*}
-  & \neg q\\
-  & p \rightarrow q\\
-  & \;\;\;\;\therefore \neg p
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  
-  $$
-  
-### 선언적 삼단논법, 소거(disjunctive syllogism)
-
-- 추론
-  $$
-  \begin{align*}
-  & p \lor q\\
-  & \neg q\\
-  & \;\;\;\;\therefore p
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  \left\{ (p \lor q) \land \neg q \right\} \rightarrow p
-  $$
-  
-### 가설적 삼단논법, 추이(hypothetical syllogism)
-
-- 추론
-  $$
-  \begin{align*}
-  & p \rightarrow q\\
-  & q \rightarrow r\\
-  & \;\;\;\;\therefore p \rightarrow r
-  \end{align*}
-  $$
-  
-- 항진 명제
-
-  $$
-  \left\{ (p \rightarrow q) \land (q \rightarrow r) \right\} \rightarrow (p \rightarrow r)
-  $$
