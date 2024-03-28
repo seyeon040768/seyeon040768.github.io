@@ -307,3 +307,61 @@ $$
   
      - 있는 경우: **<u>"이 자료에는 $$n$$개의 이상치($$a$$, $$b$$, ...)가 존재한다."</u>**
      - 없는 경우: **<u>"이 자료에는 이상치가 없다."</u>**
+
+# 이변량 자료의 분석
+
+- 이변량 자료: 변수가 2개인 자료
+
+- 2차원 히스토그램
+
+  ![2d_histogram](/assets/img/2024-03-21-probability-statistics-2/2d_histogram.png){ .w="50%" .h="50%"}
+
+- 산점도(scatter)
+
+  ![scatter](/assets/img/2024-03-21-probability-statistics-2/scatter.png){ .w="50%" .h="50%"}
+
+- 리그레쏘그램(regressogram)
+
+  ![rigressogram](/assets/img/2024-03-21-probability-statistics-2/rigressogram.png){ .w="50%" .h="50%"}
+
+# 상관 분석
+
+- 공분산
+  $$
+  s_{XY}=\frac{1}{n-1}\sum(x_i - \bar{x})(y_i - \bar{y})
+  $$
+
+- 표본상관계수
+  $$
+  \begin{align*}
+  r_{XY}
+  & = \frac{s_{XY}}{s_X s_Y}\\
+  & = \frac{1}{n-1}\sum(\frac{x_i - \bar{x}}{s_X})(\frac{y_i - \bar{y}}{s_Y})\\
+  & = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}
+  \end{align*}
+  $$
+
+  - $$r_{XY}$$이 1에 가까울 수록 선형
+
+  - \$-1 \le r_{XY} \le 1$
+
+    - $$-1 \le r_{XY} \lt 0$$: $$x$$가 증가할 때, $$y$$ 감소
+    - $$r_{XY} = 0$$: 선형성 없음
+    - $$0 \lt r_{XY} \le 1$$: $$x$$가 증가할 때, $$y$$ 증가
+
+  - 예)
+    $$
+    \begin{array}{c|cccccccccc}
+    X & 3 & 6 & 5 & 2 & 7 & 8 & 5 & 3 & 6 & 5\\
+    \hline
+    Y & 70 & 80 & 75 & 65 & 70 & 95 & 80 & 70 & 85 & 80\\
+    \end{array}
+    $$
+
+    - 평균: $$\bar{x}=5$$, $$\bar{y}=77$$
+    - 표준편차: $$s_X=1.886$$, $$s_Y=8.882$$
+    - 공분산: $$S_{XY}=12.778$$
+    - 표본상관계수: $$r_{XY}=\frac{s_{XY}}{s_X s_Y}=0.763$$
+      - 상관계수가 0.763으로 양의 상관계수이므로 두 변량 사이에 상력한 양의 상관관계가 있다.
+
+    
