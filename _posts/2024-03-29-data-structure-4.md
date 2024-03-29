@@ -95,6 +95,8 @@ typora-root-url: ../
     }
     ```
 
+    - 데이터를 삭제하지 않고, `top`을 감소시키는 것만으로 삭제한 것과 비슷한 효과를 냄
+
   - `Peek`
 
     ```c
@@ -106,5 +108,71 @@ typora-root-url: ../
     }
     ```
 
+  - 이 방법 외에 `realloc`을 이용해 동적으로 스택의 크기를 늘리는 방법도 존재
 
+# 괄호 검사 문제(valid parentheses problem)
+
+- 괄호가 쌍이 되는지 검사하는 문제
+
+  - 예) `{arr[Func(a)-(i + j)]}`
+
+- 조건
+
+  1. 왼쪽 괄호와 오른쪽 괄호의 개수가 같아야 함
+  2. 같은 종류의 괄호에서 왼쪽 괄호가 오른쪽 괄호보다 먼저 나와야 함
+  3. 서로 다른 종류의 괄호 쌍이 교차되면 안됨
+
+- 풀이법
+
+  - 문자열의 왼쪽부터 검사
+    - 왼쪽 괄호면 스택에 `push`
+    - 오른쪽 괄호면 스택을 `pop`한 후 같은 종류의 괄호인지 검사
+      - 같은 종류의 괄호면 `continue`
+      - 다른 종류의 괄호면 `false` 반환
+    - 그 외 일반 문자면 `continue`
+  - 검사가 끝나면 `true` 반환
+
+- c언어
+
+  ```c
+  int CheckParanthesis(char* str, int len)
+  {
+  	Stack paranthesisStack = { .top = -1 };
+  
+  	for (int i = 0; i < len; ++i)
+  	{
+  		switch (*(str + i))
+  		{
+  		case '[':
+  		case '{':
+  		case '(':
+  			Push(&paranthesisStack, *(str + i));
+  			break;
+  
+  		case ']':
+  			if (IsEmpty(&paranthesisStack) || Pop(&paranthesisStack) != '[')
+  			{
+  				return 0;
+  			}
+  			break;
+  		case '}':
+  			if (IsEmpty(&paranthesisStack) || Pop(&paranthesisStack) != '{')
+  			{
+  				return 0;
+  			}
+  			break;
+  		case ')':
+  			if (IsEmpty(&paranthesisStack) || Pop(&paranthesisStack) != '(')
+  			{
+  				return 0;
+  			}
+  			break;
+  		}
+  	}
+  
+  	return 1;
+  }
+  ```
+
+# 후위 표기법 계산
 
