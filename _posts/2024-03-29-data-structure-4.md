@@ -15,6 +15,10 @@ image:
 typora-root-url: ../
 ---
 
+# 코드
+
+- 모든 코드는 [깃허브](https://github.com/seyeon040768/data_structure)에서 확인하실 수 있습니다.
+
 # 스택(stack)
 
 - 데이터를 쌓는 형태의 자료구조
@@ -135,18 +139,18 @@ typora-root-url: ../
 - c언어
 
   ```c
-  int CheckParanthesis(char* str, int len)
+  int CheckParanthesis(char* str)
   {
   	Stack paranthesisStack = { .top = -1 };
   
-  	for (int i = 0; i < len; ++i)
+  	while (*str != '\0')
   	{
-  		switch (*(str + i))
+  		switch (*str)
   		{
   		case '[':
   		case '{':
   		case '(':
-  			Push(&paranthesisStack, *(str + i));
+  			Push(&paranthesisStack, *str);
   			break;
   
   		case ']':
@@ -168,6 +172,8 @@ typora-root-url: ../
   			}
   			break;
   		}
+  
+  		++str;
   	}
   
   	return 1;
@@ -175,4 +181,144 @@ typora-root-url: ../
   ```
 
 # 후위 표기법 계산
+
+- 컴파일러는 사람이 작성한 수식(중위 표기법)을 후위 표기법으로 변환하여 계산
+
+  - 중위 표기법: `2+3*4`
+  - 후위 표기법: `234*+`
+  - 스택을 이용하여 중위 표기법을 후위 표기법으로 변환할 수 있음
+  - 마찬가지로 스택을 이용하여 후위 표기법을 계산할 수 있음
+
+- 중위 표기법 -> 후위 표기법
+
+  - 중위 표기법의 왼쪽부터 검사
+    - 숫자면 결과 문자열에 `append`
+    - `*`, `/`면 스택에 `push`
+    - `+`, `-`면 스택의 맨 위에 `*`, `/`가 있는지 검사
+      - 있다면 `pop`하여 결과 문자열에 `append`
+      - `*`, `/` 유무 상관 없이 스택에 `push`
+    - `(`면 스택에 `push`
+    - `)`면 스택을 `pop`하여 `(`가 나올때까지 `pop`한 결과를 결과 문자열에 `append`
+  - 스택이 빌 때까지 `pop`하여 결과 문자열에 `append`
+
+- 후위 표기법 계산
+
+  - 후위 표기법의 왼쪽부터 검사
+    - 숫자면 스택에 `push`
+    - `*`, `/`, `+`, `-`면 스택에서 2번 `pop`하여 계산 후 결과를 스택에 `push`
+      - (나중에 `pop`된 숫자) `연산` (먼저 `pop`된 숫자)
+  - 스택을 `pop`하여 반환
+
+- c언어
+
+  - 중위 표기법 -> 후위 표기법
+
+    ```c
+    int ConvertInfixToPostfix(char* expression, char* result)
+    {
+    	if (!CheckParanthesis(expression))
+    	{
+    		return 0;
+    	}
+    
+    	Stack operatorStack = { .top = -1 };
+    	char topOperator;
+    
+    	while (*expression != '\0')
+    	{
+    		switch (*expression)
+    		{
+    		case '*':
+    		case '/':
+    		case '(':
+    			Push(&operatorStack, *expression);
+    			break;
+    		case '+':
+    		case '-':
+    			if (!IsEmpty(&operatorStack))
+    			{
+    				topOperator = Peek(&operatorStack);
+    				if (topOperator == '*' || topOperator == '/')
+    				{
+    					*result = Pop(&operatorStack);
+    					++result;
+    				}
+    			}
+    			Push(&operatorStack, *expression);
+    			break;
+    		case ')':
+    			while ((topOperator = Pop(&operatorStack)) != '(')
+    			{
+    				*result = topOperator;
+    				++result;
+    			}
+    				break;
+    		default:
+    			*result = *expression;
+    			++result;
+    			break;
+    		}
+    
+    		++expression;
+    	}
+    
+    	while (!IsEmpty(&operatorStack))
+    	{
+    		*result = Pop(&operatorStack);
+    		++result;
+    	}
+    
+    	*result = '\0';
+    
+    	return 1;
+    }
+    ```
+
+  - 후위 표기법 계산
+
+    ```c
+    int EvaluatePostfix(char* expression)
+    {
+    	Stack stack = { .top = -1 };
+    	int firstNum, secondNum, temp;
+    
+    	while (*expression != '\0')
+    	{
+    		switch (*expression)
+    		{
+    		case '*':
+    			secondNum = Pop(&stack);
+    			firstNum = Pop(&stack);
+    			temp = firstNum * secondNum;
+    			Push(&stack, temp);
+    			break;
+    		case '/':
+    			secondNum = Pop(&stack);
+    			firstNum = Pop(&stack);
+    			temp = firstNum / secondNum;
+    			Push(&stack, temp);
+    			break;
+    		case '+':
+    			secondNum = Pop(&stack);
+    			firstNum = Pop(&stack);
+    			temp = firstNum + secondNum;
+    			Push(&stack, temp);
+    			break;
+    		case '-':
+    			secondNum = Pop(&stack);
+    			firstNum = Pop(&stack);
+    			temp = firstNum - secondNum;
+    			Push(&stack, temp);
+    			break;
+    		default:
+    			Push(&stack, *expression - '0');
+    			break;
+    		}
+    
+    		++expression;
+    	}
+    
+    	return Pop(&stack);
+    }
+    ```
 
