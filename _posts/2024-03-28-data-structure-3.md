@@ -15,6 +15,10 @@ image:
 typora-root-url: ../
 ---
 
+# 코드
+
+- 모든 코드는 [깃허브](https://github.com/seyeon040768/data_structure)에서 확인하실 수 있습니다.
+
 # 배열(array)
 
 ![array](/assets/img/2024-03-28-data-structure-3/array.png)
@@ -296,5 +300,4 @@ typora-root-url: ../
 
     - 방법1과 유사
     - 마지막 항이 상수항일 경우 `x`를 제외하고 출력
-
 

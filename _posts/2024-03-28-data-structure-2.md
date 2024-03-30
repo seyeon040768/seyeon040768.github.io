@@ -15,6 +15,10 @@ image:
 typora-root-url: ../
 ---
 
+# 코드
+
+- 모든 코드는 [깃허브](https://github.com/seyeon040768/data_structure)에서 확인하실 수 있습니다.
+
 # 재귀(recursion)
 
 - 자기 자신을 호출하여 문제를 해결하는 방법
