@@ -110,8 +110,8 @@ $$
   - 두 벡터가 이루는 평행사변형의 넓이를 의미
 - 부호
   - 두 벡터가 이루는 각(작은 각)을 기준으로
-  - $$\mathbf{u}$$가 $$\mathbf{v}$$보다 시계 방향에 있으면 $$+$$
-  - $$\mathbf{u}$$가 $$\mathbf{v}$$보다 반시계 방향에 있으면 $$-$$
+  - $$\mathbf{v}$$가 $$\mathbf{u}$$보다 반시계 방향에 있으면 $$+$$
+  - $$\mathbf{v}$$가 $$\mathbf{u}$$보다 시계 방향에 있으면 $$-$$
 - 따라서 외적은 곱하는 순서가 변함에 따라 부호가 바뀜
 
 ### 외적과 행렬식(2차원)
@@ -124,6 +124,21 @@ $$
   \end{vmatrix}=3
   $$
   
+
+### 외적과 행렬식(3차원)
+
+$$
+\begin{bmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k}\\
+u_x & u_y & u_z\\
+v_x & v_y & v_z\\
+\end{bmatrix}
+=\mathbf{i}\det\begin{bmatrix}u_y & u_z\\ v_y & v_z\\\end{bmatrix} + 
+\mathbf{j}\det\begin{bmatrix}u_z & u_x\\ v_z & v_x\\\end{bmatrix} +
+\mathbf{k}\det\begin{bmatrix}u_x & u_y\\ v_x & v_y\\\end{bmatrix}
+$$
+
+
 
 ## 외적이 만드는 벡터의 의미
 
@@ -144,12 +159,12 @@ $$
   v_x & v_y & v_z
   \end{bmatrix}
   $$
-  
+
   - $$\det{\mathbf{M}}$$는 $$\mathbf{u}$$, $$\mathbf{v}$$, $$\mathbf{a}$$가 이루는 평행육면체(parallelepiped)의 부피의 절대값을 의미
-  
+
   $$
   \begin{align*}
-  \mathbf{p}\cdot\mathbf{a}
+  \det{\mathbf{M}}= \mathbf{p}\cdot\mathbf{a}
   =
   \begin{bmatrix}
   p_x & p_y & p_z
@@ -168,7 +183,7 @@ $$
   &=p_xx+p_yy+p_zz
   \end{align*}
   $$
-  
+
   $$
   \begin{align*}
   \therefore \;
@@ -177,5 +192,13 @@ $$
   &p_z=u_xv_y-u_yv_x
   \end{align*}
   $$
-  
-  
+
+  - 또한 평행육면체의 부피는 밑면($$\mathbf{u}$$와 $$\mathbf{v}$$가 이루는 평행사변형)과 높이($$\mathbf{a}$$를 $$\mathbf{u}$$와 $$\mathbf{v}$$에 모두 수직인 직선에 투영한 벡터의 길이)의 곱
+    - 이것은 ($$\mathbf{a}$$)와 ($$\mathbf{u}$$, $$\mathbf{v}$$와 수직이며 $$\mathbf{u}$$, $$\mathbf{v}$$가 이루는 평행사변형의 넓이를 길이로 가지는 벡터 $$\mathbf{w}$$)의 내적으로 나타낼 수 있음
+    - 내적은 (벡터를 다른 벡터에 투영시킨 벡터의 길이) * (다른 벡터의 길이)
+    - $$\mathbf{a}$$를 $$\mathbf{w}$$에 투영시킨 벡터의 길이는 평행육면체의 높이, $$\mathbf{w}$$의 길이는 $$\mathbf{u}$$, $$\mathbf{v}$$가 이루는 평행사변형의 넓이
+    - 따라서 $$\mathbf{a} \cdot \mathbf{w} $$는 높이와 밑면의 곱, 즉 평행육면체의 부피
+  - 두 식을 합치면 $$\mathbf{p} \cdot \mathbf{a} = \mathbf{a} \cdot \mathbf{w}$$, $$\mathbf{p}=\mathbf{w}$$
+  - 따라서 $$\mathbf{u} \times \mathbf{v} = [u_yv_z-u_zv_y, u_xv_z-u_zv_x, u_xv_y-u_yv_x]$$는 두 벡터와 수직이며 길이는 두 벡터가 이루는 평행사변형의 넓이인 벡터
+
+- 
