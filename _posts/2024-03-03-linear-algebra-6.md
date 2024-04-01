@@ -201,4 +201,3 @@ $$
   - 두 식을 합치면 $$\mathbf{p} \cdot \mathbf{a} = \mathbf{a} \cdot \mathbf{w}$$, $$\mathbf{p}=\mathbf{w}$$
   - 따라서 $$\mathbf{u} \times \mathbf{v} = [u_yv_z-u_zv_y, u_xv_z-u_zv_x, u_xv_y-u_yv_x]$$는 두 벡터와 수직이며 길이는 두 벡터가 이루는 평행사변형의 넓이인 벡터
 
-- 
