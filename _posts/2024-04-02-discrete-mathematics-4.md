@@ -52,12 +52,12 @@ typora-root-url: ../
 - 서로소(disjoint): 두 집합에 공통으로 포함되는 원소가 없는 경우
   - 교집합이 공집합, $$A \cap B = \varnothing$$​
 - 여집합(complement set, $$\bar{A}$$ 또는 $$A^\prime$$): $$U$$에는 포함되지만 $$A$$는 포함되지 않는 원소들의 집합
-
 - 차집합(difference, $$A - B$$): $$A$$는 포함되지만 $$B$$에는 포함되지 않는 원소들의 잡합
   - \$A \cap (A \cap B)^C$
 - 대칭차집합(symmetric difference, $$A \oplus B$$): $$A$$에만 포함되거나 $$B$$에만 포함되는 원소들의 집합
-
-  \$(A - B) \cup (B - A)$
+  - \$(A - B) \cup (B - A)$
+- 곱집합(product set, $$A \times B$$): $$a \in A$$, $$b \in B$$일 때, 순서상 $$(a, b)$$​의 집합
+- 멱집합(power set, $$P(A)$$): 가능한 모든 부분집합을 원소로 갖는 집합, 공집합 포함
 - 집합의 기수
   - 합집합: $$\vert A \cup B \vert = \vert A \vert + \vert B \vert - \vert A \cap B \vert$$​
     - 서로소인 경우, $$\vert A \cup B \vert = \vert A \vert + \vert B \vert$$​
@@ -65,4 +65,57 @@ typora-root-url: ../
   - 교집합: $$\vert A \cap B \vert = \vert A \vert + \vert B \vert - \vert A \cup B \vert$$
     - 집합이 3개인 경우: $$\vert A \cap B \cap C \vert = \vert A \vert + \vert B \vert + \vert C \vert - \vert A \cup B \vert - \vert A \cup C \vert - \vert B \cup C \vert + \vert A \cup B \cup C \vert$$​
   - 차집합: $$\vert A - B \vert = \vert A \vert - \vert A \cap B \vert$$
-  - 대칭차집합: $$\vert A \oplus B \vert = \vert A \cup B \vert - \vert A \cap B \vert$$
+  - 대칭차집합: $$\vert A \oplus B \vert = \vert A \cup B \vert - \vert A \cap B \vert$$​
+  - 곱집합: $$\vert A \times B \vert = \vert A \vert \times \vert B \vert$$
+  - 멱집합: $$\vert P(A) \vert = 2^n$$
+
+# 4. 집합의 대수법칙
+
+## 항등법칙 (Identity Laws)
+- 합집합의 항등법칙: $$ A \cup \varnothing = A $$
+- 교집합의 항등법칙: $$ A \cap U = A $$
+
+## 지배법칙 (Domination Laws)
+- 합집합의 지배법칙: $$ A \cup U = U $$
+- 교집합의 지배법칙: $$ A \cap \varnothing = \varnothing $$
+
+## 멱등법칙 (Idempotent Laws)
+- 합집합의 멱등법칙: $$ A \cup A = A $$
+- 교집합의 멱등법칙: $$ A \cap A = A $$
+
+## 교환법칙 (Commutative Laws)
+- 합집합의 교환법칙: $$ A \cup B = B \cup A $$
+- 교집합의 교환법칙: $$ A \cap B = B \cap A $$
+
+## 결합법칙 (Associative Laws)
+- 합집합의 결합법칙: $$ A \cup (B \cup C) = (A \cup B) \cup C $$
+- 교집합의 결합법칙: $$ A \cap (B \cap C) = (A \cap B) \cap C $$
+
+## 분배법칙 (Distributive Laws)
+- 합집합에 대한 분배법칙: $$ A \cup (B \cap C) = (A \cup B) \cap (A \cup C) $$
+- 교집합에 대한 분배법칙: $$ A \cap (B \cup C) = (A \cap B) \cup (A \cap C) $$
+
+## 이중 보법칙 (Double Complement Laws)
+- \$\bar{\bar{A}} = A$
+
+## 보법칙 (Complement Laws)
+- $$A \cup \bar{A} = U$$, $$\bar{\varnothing} = U$$
+- $$A \cap \bar{A} = \varnothing$$, $$\bar{U} = \varnothing$$
+
+## 드 모르간의 법칙 (De Morgan's Laws)
+- 합집합에 대한 드 모르간의 법칙: $$ \overline{A \cup B} = \bar{A} \cap \bar{B} $$
+- 교집합에 대한 드 모르간의 법칙: $$ \overline{A \cap B} = \bar{A} \cup \bar{B} $$
+
+## 흡수법칙 (Absorption Laws)
+- 합집합의 흡수법칙: $$ A \cup (A \cap B) = A $$
+- 교집합의 흡수법칙: $$ A \cap (A \cup B) = A $$
+
+# 5. 집합의 분할
+
+- 분할(partition, $$A = \{A_1, A_2, \cdots, A_n\}$$): 공집합이 아닌 집합 $$A$$를 서로소이면서 공집합이 아닌 하나 이상의 부분집합으로 나누는 것
+  - 분할의 조건
+    - \$A_i \neq \varnothing$
+    - $$i \neq j$$이면, $$A_i \cap A_j = \varnothing$$
+    - \$A_i \subseteq A$
+    - \$A = A_1 \cup A_2 \cup \cdots \cup A_n$
+
