@@ -18,6 +18,7 @@ typora-root-url: ../
 # 내적(inner product)
 
 ![inner_product](/assets/img/2024-03-03-linear-algebra-6/inner_product.png){: w="50%" h="50%"}
+
 $$
 \mathbf{u} \cdot \mathbf{v}
 =\left\Vert\mathbf{u}\right\Vert\cos{\theta} \left\Vert\mathbf{v}\right\Vert
@@ -44,7 +45,6 @@ $$
 ![inner_product_linear_transformation](/assets/img/2024-03-03-linear-algebra-6/inner_product_linear_transformation.png)
 
 - 표준 기저 벡터를 $$\mathbf{v}$$​방향의 직선 공간에 투영한 벡터의 길이를 구하는 과정
-
   - 표준 기저 벡터의 투영된 벡터를 2차원으로 표현하는 대신 1차원($$\mathbf{v}$$​방향의 직선)으로 생각
   - 따라서 새로운 기저 $$\mathbf{i}^\prime = \hat{\mathbf{v}}_x$$, $$\mathbf{j}^\prime = \hat{\mathbf{v}}_y$$​를 계산
 
@@ -53,9 +53,7 @@ $$
 {: .prompt-tip}
 
 - $$\mathbf{u}=(x, y)$$를 $$\hat{\mathbf{v}}$$에 투영하면 $$\mathbf{u}^\prime=x\mathbf{i}^\prime + y\mathbf{j}^\prime$$
-
   - 선형 변환은 기저 벡터들에 의해 결정되기 때문에 이러한 계산이 성립
-
   - $$\mathbf{u}^\prime$$는 1차원 벡터이므로 $$\hat{\mathbf{v}}$$에 투영된 $$\mathbf{u}$$​​의 길이와 같음
 
     $$
@@ -67,7 +65,6 @@ $$
 ### $$\mathbf{v}$$가 단위 벡터가 아닌 경우
 
 - $$\mathbf{v}$$가 단위 벡터가 아닌 경우에는 단위 벡터인 경우의 계산법($$\hat{\mathbf{v}}\cdot\mathbf{u}=x\hat{\mathbf{v}}_x+y\hat{\mathbf{v}}_y$$)에 $$\mathbf{v}$$의 길이를 곱해주면 됨
-
 - $$\mathbf{v}$$의 길이를 $$n$$이라 하면
 
   $$
@@ -85,8 +82,6 @@ $$
 $$
 \mathbf{u}\cdot\mathbf{v}=\left\Vert\mathbf{u}\right\Vert \left\Vert\mathbf{v}\right\Vert\cos{\theta}=\mathbf{u}_x\mathbf{v}_x+\mathbf{u}_y\mathbf{v}_y=[\mathbf{u}_x\;\mathbf{u}_y]\begin{bmatrix}\mathbf{u}_x\\\mathbf{u}_y\end{bmatrix}
 $$
-
-
 
 ## 내적의 성질
 - 두 벡터가 이루는 각에 따라 부호가 달라짐
@@ -117,6 +112,7 @@ $$
 ### 외적과 행렬식(2차원)
 
 - $$\mathbf{i}$$가 $$\mathbf{u}$$로, $$\mathbf{j}$$가 $$\mathbf{v}$$로 기저 변환 되었다고 생각하면 행렬식을 통해 평행사변형의 넓이 계산 가능
+
   $$
   \begin{vmatrix}
   2 & -1\\
@@ -138,11 +134,10 @@ v_x & v_y & v_z\\
 \mathbf{k}\det\begin{bmatrix}u_x & u_y\\ v_x & v_y\\\end{bmatrix}
 $$
 
-
-
 ## 외적이 만드는 벡터의 의미
 
 - 내적과 다르게 외적의 결과는 벡터
+
 ![Cross-product-right-hand_rule](/assets/img/2024-03-03-linear-algebra-6/Cross-product-right-hand_rule.png){: w="75%" h="75%"}*By MikeRun - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=116897682*
 
 - 외적은 두 벡터와 수직인 벡터를 계산

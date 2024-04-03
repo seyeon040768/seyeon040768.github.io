@@ -34,7 +34,7 @@ typora-root-url: ../
 - 벡터의 크기(길이)
   - 일반적으로 피타고라스의 정리를 이용해 계산
   - \$\left\Vert\mathbf{v}\right\Vert=\sqrt{v_x^2 +v_y^2}$
-  - $$\mathbf{a} = (1, 2)$$이면 원점에서 $$\left\Vert\mathbf{a}\right\Vert=\sqrt{1^2+2^2}=\sqrt{5}$$
+    - $$\mathbf{a} = (1, 2)$$이면 원점에서 $$\left\Vert\mathbf{a}\right\Vert=\sqrt{1^2+2^2}=\sqrt{5}$$만큼 떨어져 있음
 
 - 단위 벡터(unit vector): 크기가 1인 벡터
   - $$\hat{\mathbf{v}}$$처럼 hat 기호를 이용해 표기
@@ -56,11 +56,8 @@ typora-root-url: ../
 ## 벡터의 스칼라 곱
 
 - 스칼라: 크기 정보만 가지는 값
-  
 - 스칼라 값을 각 원소에 곱셈
-  
   - 예) $$(1, 2) \times 2 = (2, 4)$$
-  
 - 기하적으로 벡터의 크기를 스칼라 배하는 것
 
   ![vector_mul](/assets/img/2024-02-20-linear-algebra-1/vector_mul.png){: w="50%" h="50%"}

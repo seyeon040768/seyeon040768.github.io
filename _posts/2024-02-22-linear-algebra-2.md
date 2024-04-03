@@ -51,6 +51,7 @@ typora-root-url: ../
   - 즉, $$\mathbf{a}$$를 표준 벡터 공간에서는 $$(4, 3)$$​로 나타낼 수 있음
 
 ![changing_coordinate_vector](/assets/img/2024-02-22-linear-algebra-2/changing_coordinate_vector.png)*일반화한 그림*
+
 $$
 \mathbf{p}_B = (x', y') = x\mathbf{u} + y\mathbf{v}
 $$

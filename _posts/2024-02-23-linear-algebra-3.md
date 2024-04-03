@@ -28,11 +28,8 @@ typora-root-url: ../
   $$
 
   - 3*3 형태의 행렬
-
 - $$\mathbf{T}$$: 대문자 굵은 글씨체로 표현
-
 - 대괄호($$[]$$)나 소괄호($$()$$)로 감싸 표현
-
 - 행렬은 벡터를 나열한 것으로 생각할 수 있음
 
   $$
@@ -76,6 +73,7 @@ typora-root-url: ../
 ## 행렬의 덧셈
 
 - 같은 위치에 있는 원소를 덧셈
+
   $$
   \begin{bmatrix}
   1 & 2\\
@@ -116,6 +114,7 @@ typora-root-url: ../
 ### 행렬 곱
 
 - 앞 행렬의 행과 뒤 행렬의 열을 곱셈
+
   $$
   \begin{bmatrix}
   a & b & c\\
@@ -134,7 +133,7 @@ typora-root-url: ../
   $$
 
 - 따라서 앞 행렬의 열의 개수와 뒤 행렬의 행의 개수가 같아야 함
-  - $$a\times b$$ 크기의 행렬과 $$b\times c$$ 크기의 행렬을 곱한 행렬의 크기는 $$a\times c$$​
+  - $$a\times b$$ 크기의 행렬과 $$b\times c$$ 크기의 행렬을 곱한 행렬의 크기는 $$a\times c$$
 - 행렬 곱은 순서가 바뀌면 결과가 달라지거나 모양이 달라 곱할 수 없음
 
 ## 전치 행렬(transpose)
@@ -203,9 +202,7 @@ $$
 - 선형 변환의 조건
   - 선형 변환 전 벡터 공간과 후 벡터 공간의 원점은 일치해야 함
   - 선형성(직선)이 유지되어야 함
-
 - 벡터 공간 자체를 변형시킨다고 볼 수 있음
-
   - 예)
 
     ![linear_transformation_example](/assets/img/2024-02-23-linear-algebra-3/linear_transformation_example.png)
@@ -220,6 +217,7 @@ $$
     - 만약 기저가 $$(1, 0)$$, $$(-1, 0)$$이라면 선형 결합을 통해 생성된 벡터의 $$y$$ 값은 항상 0
 
 - $$\mathbf{i}$$를 $$(1, 2)$$로, $$\mathbf{j}$$를 $$(3, 0)$$으로 변환하는 선형 변환의 경우
+
   $$
   (x', y') = x(1, 2) + y(3, 0) = (x + 3y, 2x)
   $$
@@ -233,6 +231,7 @@ $$
 $$
 
 - 위 식을 행렬로 간단하게 표현할 수 있음
+
   $$
   [x, y]
   \begin{bmatrix}
@@ -244,6 +243,7 @@ $$
   $$
 
 - 정리하면 $$\mathbf{i}$$를 $$(1, 2)$$로, $$\mathbf{j}$$를 $$(3, 0)$$으로 변환하는 선형 변환 $$\tau$$를 행렬(row-major)로 표현하면
+
   $$
   \begin{bmatrix}
   \leftarrow & \tau(\mathbf{i}) & \rightarrow\\
@@ -270,11 +270,13 @@ $$
 ### 회전(2d)
 
 ![cos_sin_rotate](/assets/img/2024-02-23-linear-algebra-3/cos_sin_rotate.png){: w="50%" h="50%"}
+
 $$
 \begin{align*}&x^\prime=x\cos{\theta}-y\sin{\theta}\\ & y^\prime=x\sin{\theta}+y\cos{\theta}\end{align*}
 $$
 
 - 회전은 선형 변환
+
   $$
   \begin{align*}
   \text{Function:}\quad&\tau(x, y) = (x \cos\theta - y \sin\theta, x \sin\theta + y \cos\theta) \\
@@ -344,6 +346,7 @@ $$
   $$
 
   - 역행렬
+
     $$
     R_\mathbf{n}^{-1}=R_\mathbf{n}^T = \begin{bmatrix}c + (1-c)x^2 & (1-c)xy - sz & (1-c)xz + sy\\(1-c)xy + sz & c + (1-c)y^2 & (1-c)yz - sx\\(1-c)xz - sy & (1-c)yz + sx & c + (1-c)z^2\end{bmatrix}
     $$
@@ -361,12 +364,13 @@ $$
 - $$x$$방향으로는 $$s_x$$만큼, $$y$$방향으로는 $$s_y$$만큼, $$z$$방향으로는 $$s_z$$만큼 변형
 
 - 스케일링도 선형 변환이므로 변환 행렬을 구할 수 있음
+
   $$
   \begin{align*}&S(\mathbf{i})=(s_x\cdot1, s_y\cdot0, s_z\cdot0)=(s_x, 0, 0)\\&S(\mathbf{j})=(s_x\cdot0, s_y\cdot1, s_z\cdot0)=(0, s_y, 0)\\&S(\mathbf{k})=(s_x\cdot0, s_y\cdot0, s_z\cdot1)=(0, 0, s_z)\end{align*}
   $$
 
   $$
-  \mathbf{S}=\begin{bmatrix}s_x&0&0\\0&s_y&0\\0&0&s_z\end{bmatrix}\quad\mathbf{S}^{-1}=\begin{bmatrix}1/s_x&0&0\\0&1/s_y&0\\0&0&1/s_z\end{bmatrix}
+\mathbf{S}=\begin{bmatrix}s_x&0&0\\0&s_y&0\\0&0&s_z\end{bmatrix}\quad\mathbf{S}^{-1}=\begin{bmatrix}1/s_x&0&0\\0&1/s_y&0\\0&0&1/s_z\end{bmatrix}
   $$
 
   
@@ -386,6 +390,7 @@ $$
 - $$x$$축에 대한 반사
 
   - $$\mathbf{i}$$ 기저는 그대로, $$\mathbf{j}$$ 기저는 $$-\mathbf{j}$$로 변환
+
     $$
     [x, y]
     \begin{bmatrix}
@@ -396,7 +401,7 @@ $$
     [x, -y]
     $$
 
-- $$x$$​방향으로 밀기(shear)
+- $$x$$방향으로 밀기(shear)
 
   ![X_shearing](/assets/img/2024-02-23-linear-algebra-3/X_shearing.jpg){: w="50%" h="50%"}
 
@@ -435,6 +440,7 @@ $$
 - 사각형을 시계방향으로 $$90^\circ$$회전시키고 크기를 2배 늘리고 싶다면?
   - 사각형을 이루는 꼭짓점 벡터 $$\mathbf{v}_0, \mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$$
   - $$\mathbf{v}_i$$에 $$90^\circ$$회전 변환 행렬($$\mathbf{R}$$)을 곱하고 크기를 2배 늘리는 변환 행렬($$\mathbf{S}$$)을 곱하면 됨
+
     $$
     [x_i, y_i]
     \begin{bmatrix}
@@ -448,15 +454,16 @@ $$
     =
     \mathbf{v}\mathbf{R}\mathbf{S}
     $$
+
   - 위 식에 행렬 곱의 결합 법칙을 적용할 수 있음
+
     $$
     \mathbf{v}\mathbf{R}\mathbf{S}=\mathbf{v}(\mathbf{R}\mathbf{S})=\mathbf{v}\mathbf{T}
     $$
+
   - 시계방향으로 $$90^\circ$$회전시키고 크기를 2배 늘리는 새로운 변환 행렬 $$\mathbf{T}$$를 계산
   - 결론적으로 원하는 작업을 순차적으로 진행하는 대신, 변환 행렬끼리 먼저 곱해 하나의 변환 행렬을 구할 수 있음
-
     - 이렇게 하면 간단하고 중복되는 계산 없이 최종 변환 행렬을 한번만 구해 각 꼭짓점에 곱하면 되므로 속도가 빠름
-
 - 아무리 많은 선형 변환을 한다고 해도 각각의 변환 행렬끼리 곱하면 결국 하나의 선형 변환이 됨
 
 # 비정사각 변환 행렬
