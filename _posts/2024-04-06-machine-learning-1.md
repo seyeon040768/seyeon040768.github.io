@@ -38,13 +38,16 @@ typora-root-url: ../
     - 속성값(attribute value, $$\mathbf{x}_{ij}$$): 속성에 관한 값
     - 속성 공간(attribute space): 속성값들의 집합
   - 샘플 공간(sample space, $$\mathcal{X}$$): 다양한 샘플들의 집합, 속성 공간의 확장
-    - 차원수(dimensionality): 샘플 공간 $$\mathcal{X}$$위 하나의 벡터 $$\mathbf{x}_i \in \mathcal{X}$$의 속성의 개수
+    - 차원수(dimensionality): 샘플 공간 $$\mathcal{X}$$위 하나의 벡터 $$\mathbf{x}_i \in \mathcal{X}$$​의 속성의 개수
+    - $$\vert \mathcal{X} \vert$$: 샘플 공간 $$\mathcal{X}$$에 속한 샘플의 개수, $$\mathcal{X}$$의 크기
 - 레이블(label, $$y_i$$): **결과**를 나타내는 정보, $$(\mathbf{x}_i, y_i)$$는 $$i$$번째 샘플의 레이블을 의미
   - 레이블 공간(label space, $$\mathcal{Y}$$): 레이블들의 집합, $$y_i \in \mathcal{Y}$$
 - 학습(learning) 또는 훈련(training): 데이터를 통해 **모델(model)**을 만드는 과정
+  - $$\mathcal{X}$$를 $$\mathcal{Y}$$에 투영하는 식을 찾는 과정, $$\mathcal{X} \mapsto \mathcal{Y}$$
   - 훈련 데이터(training data): 훈련에 사용되는 데이터
   - 훈련 세트(traning set): 훈련 데이터셋
   - 훈련 샘플(training sample): 훈련 데이터셋의 샘플
+  
 - 검증(testing): 학습이 완료된 최종 모델이 **정상적으로 작동하는지 확인**하는 과정
   - 테스트 샘플(testing sample): 검증을 위해 사용되는 샘플
 - 가설(hypothesis): 학습 모델이 **예측(prediction)**한 데이터 속 규칙
@@ -80,3 +83,32 @@ typora-root-url: ../
 
 # 4. 귀납적 편향
 
+- 훈련 데이터와 잘 맞는 가설이 여러개 있을 수 있음
+  - 이러한 가설들은 훈련 데이터에 없는 데이터에 대해 다른 결과를 내놓을 수도 있음
+  - 따라서 어떤 가설을 최종적으로 선택할지는 매우 중요한 문제
+- 머신러닝 알고리즘이 학습할 때는 항상 특정한 유형의 가설에 대한 **귀납적 편향(inductive bias)**를 가지고 있음
+  - 일반적인 모델을 좋아한다면 일반적인 가설에 대해 기울어진 편향
+  - 특수한 모델을 좋아한다면 특수한 가설에 대해 기울어진 편향
+  - 만약 편향을 가지고 있지 않다면?
+    - 어떤 가설을 선택할지 모르기 때문에 혼란에 빠질 수 있음
+
+## 오컴의 면도날(Occam's razor)
+
+- 다수의 가설에서 관측된 결과가 일치하다면, 가장 간단한 것을 선택해야 한다는 원칙
+
+![inductive_bias](/assets/img/2024-04-06-machine-learning-1/inductive_bias.png){: w="50%" h="50%"}
+
+- 만약 '평활함'이 간단함을 의미한다면 위 두 가설($$A$$, $$B$$) 중 $$A$$를 선택하는 것이 현명
+  - 따라서 $$A$$에 대한 편향을 갖게 됨
+- 하지만 실제로는 오른쪽 그림처럼 다른 경우가 존재할 수 있음
+  - 또한 현재의 가설이 간단한지 평가하는 것도 쉽지 않음
+
+![inductive_bias_compare](/assets/img/2024-04-06-machine-learning-1/inductive_bias_compare.png){: w="50%" h="50%"}
+
+- 학습 알고리즘 $$\mathfrak{L}_a$$는 어떠한 편향에 의해 $$A$$를 선택했고, 다른 학습 알고리즘 $$\mathfrak{L}_b$$는 $$B$$를 선택했다고 가정
+  - '평활함'이 단순함이라면 $$\mathfrak{L}_a$$는 $$\mathfrak{L}_b$$보다 좋은 알고리즘이라 할 수 있음
+    - 왼쪽 그림처럼 테스트 데이터에 대해서도 잘 일치함
+  - 하지만 오른쪽 그림과 같은 경우가 나올 수도 있음
+    - 테스트 데이터가 오히려 $$A$$보다 $$B$$에 더 일치함
+  - 이처럼 어떤 문제에 대해서는 $$\mathfrak{L}_a$$가 더 좋은 성능을 내지만, 다른 문제에 대해서는 $$\mathfrak{L}_b$$가 더 좋은 성능을 낼 수도 있음
+- 
