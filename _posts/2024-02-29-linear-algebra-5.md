@@ -159,11 +159,11 @@ typora-root-url: ../
   $$
 
   - 2차원을 1차원으로 축소시키는 변환 행렬
-  - $$\text{nullity}(\mathbf{T})=1$$
+  - \$\text{nullity}(\mathbf{T})=1$
 
 # 랭크와 nullity의 관계
 
-- $$\text{rank}(\mathbf{A}_n) + \text{nullity}(\mathbf{A}_n) = n$$
+- \$\text{rank}(\mathbf{A}_n) + \text{nullity}(\mathbf{A}_n) = n$
 - $$n$$차원 공간을 변형하는 변환 행렬의 랭크와 nullity를 더하면 반드시 $$n$$
   - 랭크는 변환된 공간의 차원, nullity는 축소되어 영벡터가 된 벡터 집합의 차원
   - 따라서 둘이 더하면 반드시 변환 전 공간의 차원일 수 밖에 없음
