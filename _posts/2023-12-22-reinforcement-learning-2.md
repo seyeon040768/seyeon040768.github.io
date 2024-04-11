@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 2. 마르코프 결정 프로세스(Markov Decision Process)
 author: seyeon
 date: 2023-12-22 23:00:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true

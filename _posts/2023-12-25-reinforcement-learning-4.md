@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 4. MDP를 알 때의 플래닝
 author: seyeon
 date: 2023-12-25 17:00:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true

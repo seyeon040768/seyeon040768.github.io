@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 6. MDP를 모를 때 최고의 정책 찾기
 author: seyeon
 date: 2024-01-04 01:00:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true

@@ -2,7 +2,7 @@
 title: 머신러닝 1. 머신러닝의 기초
 author: seyeon
 date: 2024-04-06 01:00:00 +0900
-categories: [Computer Science, Machine Learning]
+categories: [Artificial Intelligence, Machine Learning]
 tags: [ml]
 pin: false
 math: true

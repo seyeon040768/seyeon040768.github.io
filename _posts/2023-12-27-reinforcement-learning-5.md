@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 5. MDP를 모를 때 밸류 평가하기
 author: seyeon
 date: 2023-12-27 18:30:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true

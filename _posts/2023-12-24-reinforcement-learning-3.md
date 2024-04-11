@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 3. 벨만 방정식(Bellman Equation)
 author: seyeon
 date: 2023-12-24 02:17:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true

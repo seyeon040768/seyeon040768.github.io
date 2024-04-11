@@ -2,7 +2,7 @@
 title: 강화학습 Chapter 7. 가치 기반 에이전트
 author: seyeon
 date: 2024-01-09 01:00:00 +0900
-categories: [AI, Reinforcement Learning]
+categories: [Artificial Intelligence, Reinforcement Learning]
 tags: [AI, RL]
 pin: false
 math: true
