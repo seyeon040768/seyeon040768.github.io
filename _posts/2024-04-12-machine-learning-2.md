@@ -187,12 +187,10 @@ $$
     \end{align*}
     $$
 
-## 재현율, 정밀도, F1-score
+## 재현율, 정밀도, F1 스코어
 
 - 오차율만으로는 자세한 정보를 알기 어려움
-
   - 예) 잘못 분류한 샘플이 위양성인지, 위음성인지
-
 - 혼동 행렬(confusion matrix): 이진 분류 문제에서 실제 클래스와 모델이 예측 분류한 클래스의 조합
 
   ![confusion_matrix](/assets/img/2024-04-12-machine-learning-2/confusion_matrix.png){: w="70%" h="70%"}
@@ -210,7 +208,7 @@ $$
   $$
   P = \frac{TP}{TP + FP}
   $$
-  
+
 - 재현율(recall): 실제 양성 중 양성으로 잘 예측한 비율
 
   $$
@@ -224,3 +222,75 @@ $$
   - 너무 신중하게 양성을 고른다면
     - 양성이 아닌 것을 양성으로 분류하는 경우는 적어지므로 정밀도는 높아지지만
     - 양성인 것을 음성으로 분류하는 경우가 많아지므로 재현율은 낮아짐
+
+- 손익분기점(break-even point, BEP): '정밀도 = 재현율'일 때의 값
+  - BEP를 비교하여 어떤 모델의 성능이 좋은지 알 수 있음
+- F1 스코어: 재현율과 정밀도의 조화 평균($$\frac{1}{F1} = \frac{1}{2} \cdot \left( \frac{1}{P} + \frac{1}{R} \right)$$)
+
+  $$
+  \begin{align*}
+  F1
+  &= \frac{2\times P \times R}{P + R}\\
+  &= \frac{2\frac{TP}{TP + FP}\frac{TP}{TP + FN}}{\frac{TP}{TP + FP} + \frac{TP}{TP + FN}}\\
+  &= \frac{2\frac{TP}{(TP + FP)(TP + FN)}}{\frac{2TP + FP + FN}{(TP + FP)(TP + FN)}}\\
+  &= \frac{2TP}{2TP + FP + FN}\\
+  &= \frac{2 \times TP}{m + TP - TN} & (\because TP + FP + FN = m - TN)\\
+  \end{align*}
+  $$
+
+  - 문제에 따라 정밀도와 재현율의 중요도는 다름
+    - 추천 시스템은 정밀도가 중요
+    - 종양의 양,음성 여부는 재현율이 중요
+  - 따라서 F1의 일반 형식은 $$F_\beta$$를 이용해 정밀도와 재현율에 대한 서로 다른 선호도를 나타낼 수 있음
+
+    $$
+    F_\beta = \frac{(1 + \beta^2) \times P \times R}{(\beta^2 \times P) + R}, \; \beta \gt 0
+    $$
+
+    - 가중 조화 평균($$\frac{1}{F_\beta} = \frac{1}{1 + \beta^2} \cdot \left( \frac{1}{P} + \frac{\beta^2}{R} \right)$$)
+    - $$\beta \lt 1$$: 정밀도의 영향이 큼
+    - $$\beta = 1$$: F1 스코어
+    - $$\beta \gt 1$$: 재현율의 영향이 큼
+- 여러 번의 훈련이나 테스트를 실행하거나 여러개의 데이터셋을 사용하여 많은 수의 혼동 행렬을 얻은 경우
+  - 매크로 F1(macro-F1)
+    - 각 혼동 행렬의 정밀도와 재현율을 평균내어 계산
+    - 매크로 정밀도
+
+      $$
+      \text{macro-}P = \frac{1}{n}\sum_{i=1}^n P_i
+      $$
+      
+    - 매크로 재현율
+    
+      $$
+      \text{macro-}R = \frac{1}{n}\sum_{i=1}^n R_i
+      $$
+      
+    - 매크로 F1
+
+      $$
+      \text{macro-}F1 = \frac{2 \times \text{macro-}P \times \text{macro-}R}{\text{macro-}P + \text{macro-}R}
+      $$
+    
+  - 마이크로 F1(micro-F1)
+    - 모든 혼동 행렬의 원소들을 평균내어 정밀도와 재현율을 계산
+    - 마이크로 정밀도
+  
+      $$
+      \text{micro-}P = \frac{\overline{TP}}{\overline{TP} + \overline{FP}}
+      $$
+  
+    - 마이크로 재현율
+
+      $$
+      \text{micro-}R = \frac{\overline{TP}}{\overline{TP} + \overline{FN}}
+      $$
+  
+    - 마이크로 F1
+
+      $$
+      \text{micro-}F1 = \frac{2 \times \text{micro-}P \times \text{micro-}R}{\text{micro-}P + \text{micro-}R}
+      $$
+
+## P-R Curve와 ROC, AUC
+
