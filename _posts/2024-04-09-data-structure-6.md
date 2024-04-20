@@ -160,6 +160,7 @@ typora-root-url: ../
   - `delete`: 특정 위치에 있는 요소를 제거
   - `clear`: 모든 요소를 제거
   - `get_length`: 연결 리스트의 길이를 반환
+  - `reverse`: 연결 리스트의 순서를 반전
 - 연결 리스트의 장단점
   - 장점
     - 삽입, 삭제가 용이
@@ -177,4 +178,165 @@ typora-root-url: ../
 - `head`가 첫 노드를 가리킴
 - 마지막 노드의 링크는 `NULL`
 - c언어
-  - 
+  - 노드&단순 연결 리스트 구조체 정의
+  
+    ```c
+    typedef struct Node
+    {
+    	int data;
+    	struct Node* link;
+    } Node;
+    
+    typedef struct
+    {
+    	Node* head;
+    	int length;
+    } SinglyLinkedList;
+    ```
+  
+  
+  - `IsEmpty`
+  
+    ```c
+    int IsEmpty(const SinglyLinkedList* list)
+    {
+    	return list->head == NULL;
+    }
+    ```
+  
+  - `GetNode`
+  
+    ```c
+    Node* GetNode(const SinglyLinkedList* list, const int pos)
+    {
+    	if (pos < 0 || pos >= list->length)
+    	{
+    		return NULL;
+    	}
+    
+    	Node* search = list->head;
+    
+    	for (int i = 0; i < pos; ++i)
+    	{
+    		search = search->link;
+    	}
+    
+    	return search;
+    }
+    ```
+  
+  - `Insert`
+  
+    ```c
+    int Insert(SinglyLinkedList* list, const int pos, const int data)
+    {
+    	Node* newNode = (Node*)malloc(sizeof(Node));
+    	if (newNode == NULL)
+    	{
+    		return 0;
+    	}
+    	newNode->data = data;
+    
+    	if (pos == 0)
+    	{
+    		newNode->link = list->head;
+    		list->head = newNode;
+    
+    		++(list->length);
+    		return 1;
+    	}
+    
+    	Node* prev;
+    	if ((prev = GetNode(list, pos - 1)) == NULL) // if pos is wrong
+    	{
+    		free(newNode);
+    		return 0;
+    	}
+    
+    	newNode->link = prev->link;
+    	prev->link = newNode;
+    	
+    	++(list->length);
+    	return 1;
+    }
+    ```
+  
+  - `Delete`
+  
+    ```c
+    void Delete(SinglyLinkedList* list, const int pos)
+    {
+    	if (pos == 0)
+    	{
+    		Node* current = list->head;
+    		list->head = current->link;
+    		free(current);
+    
+    		--(list->length);
+    		return;
+    	}
+    
+    	Node* prev = GetNode(list, pos - 1);
+    	if (prev == NULL || prev->link == NULL) // if pos is wrong
+    	{
+    		return;
+    	}
+    
+    	Node* current = prev->link;
+    	prev->link = current->link;
+    	free(current);
+    
+    	--(list->length);
+    }
+    ```
+  
+  - `Clear`
+  
+    ```c
+    void Clear(SinglyLinkedList* list)
+    {
+    	Node* search = list->head;
+    	Node* temp;
+    
+    	while (search != NULL)
+    	{
+    		temp = search->link;
+    		free(search);
+    		search = temp;
+    	}
+    
+    	list->length = 0;
+    }
+    ```
+  
+  - `GetLength`
+  
+    ```c
+    int GetLength(const SinglyLinkedList* list)
+    {
+    	return list->length;
+    }
+    ```
+  
+  - `Reverse`
+  
+    ```c
+    void Reverse(SinglyLinkedList* list)
+    {
+    	Node* current = list->head;
+    	Node* prev = NULL;
+    	Node* next;
+    
+    	while (current != NULL)
+    	{
+    		next = current->link;
+    		current->link = prev;
+    		prev = current;
+    		current = next;
+    	}
+    
+    	list->head = prev;
+    }
+    ```
+  
+    
