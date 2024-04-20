@@ -22,16 +22,14 @@ typora-root-url: ../
 # 리스트(list)
 - 순서가 있는 객체들의 모임
   - 원하는 위치에 요소 추가(`insert`) 및 삭제(`delete`) 가능
-  
 - list의 기능
-  - `is_empty`: 리스트가 비었는지 확인
   - `is_full`: 리스트가 포화 상태인지 확인
+  - `is_empty`: 리스트가 비었는지 확인
   - `insert`: 특정 위치에 요소를 추가
   - `delete`: 특정 위치에 있는 요소를 제거
   - `clear`: 모든 요소를 제거
   - `get_value`: 특정 위치에 있는 값을 확인
   - `get_length`: 리스트의 길이를 반환
-  
 - c언어
   - 리스트 구조체 정의
 
@@ -60,9 +58,9 @@ typora-root-url: ../
     	return list->size == 0;
     }
     ```
-  
+
   - `Insert`
-  
+
     ```c
     void Insert(List* list, int pos, int value)
     {
@@ -83,9 +81,9 @@ typora-root-url: ../
     	++(list->size);
     }
     ```
-  
+
   - `Delete`
-  
+
     ```c
     void Delete(List* list, int pos)
     {
@@ -107,23 +105,23 @@ typora-root-url: ../
     	--(list->size);
     }
     ```
-  
+
     - 앞으로 당길 때, 마지막 쓰레기 값을 제거하지 않았음
     - `size`를 감소시켰기 때문에 제거하지 않아도 상관 없음
-  
+
   - `Clear`
-  
+
     ```c
     void Clear(List* list)
     {
     	list->size = 0;
     }
     ```
-  
+
     - 값을 제거하는 대신 `size`를 `0`으로 설정
-  
+
   - `GetValue`
-  
+
     ```c
     int GetValue(const List* list, int pos)
     {
@@ -137,14 +135,46 @@ typora-root-url: ../
     	return list->elements[pos];
     }
     ```
-  
+
   - `GetLength`
-  
+
     ```c
     int GetLength(const List* list)
     {
     	return list->size;
     }
     ```
-  
-    
+
+
+# 연결 리스트(linked list)
+
+![nodes](/assets/img/2024-04-09-data-structure-6/nodes.png)
+
+- 노드(node): 연결 리스트의 기본 단위
+  - 데이터 필드(data field): 실질적인 값을 저장
+  - 링크 필드(link field): 다음 노드의 주소를 저장
+- 연결 리스트의 기능
+  - `is_empty`: 연결 리스트가 비었는지 확인
+  - `get_node`: 특정 위치에 있는 노드를 확인
+  - `insert`: 특정 위치에 요소를 추가
+  - `delete`: 특정 위치에 있는 요소를 제거
+  - `clear`: 모든 요소를 제거
+  - `get_length`: 연결 리스트의 길이를 반환
+- 연결 리스트의 장단점
+  - 장점
+    - 삽입, 삭제가 용이
+    - 연속된 메모리 공간이 필요 없음
+    - 메모리 공간만 충분하다면 크기 제한이 없음(유동적인 크기)
+  - 단점
+    - 구현이 어려움
+    - 메모리 파편화
+
+## 단순 연결 리스트(singly linked list)
+
+![singly_linked_list](/assets/img/2024-04-09-data-structure-6/singly_linked_list.png)
+
+- 하나의 링크 필드를 이용해 연결
+- `head`가 첫 노드를 가리킴
+- 마지막 노드의 링크는 `NULL`
+- c언어
+  - 
