@@ -305,6 +305,7 @@ typora-root-url: ../
     		search = temp;
     	}
     
+    	list->head = NULL;
     	list->length = 0;
     }
     ```
@@ -338,5 +339,342 @@ typora-root-url: ../
     	list->head = prev;
     }
     ```
+
+## 원형 연결 리스트(circular linked list)
+
+![circular_linked_list](/assets/img/2024-04-09-data-structure-6/circular_linked_list.png)
+
+- 마지막 노드의 링크가 첫 번째 노드를 가리키는 연결 리스트
+- 장점
+  - 한 노드에서 모든 노드로의 접근이 가능
+  - `head`가 마지막 노드를 가리키도록 설정하면 처음과 마지막에 노드를 삽입하기 편함
+- c언어
+  - 노드&단순 연결 리스트 구조체 정의
   
+    ```c
+    typedef struct Node
+    {
+    	int data;
+    	struct Node* link;
+    } Node;
     
+    typedef struct
+    {
+    	Node* head;
+    	int length;
+    } CircularLinkedList;
+    ```
+  
+  
+  - `IsEmpty`
+  
+    ```c
+    int IsEmpty(const CircularLinkedList* list)
+    {
+    	return list->head == NULL;
+    }
+    ```
+  
+  - `GetNode`
+  
+    ```c
+    Node* GetNode(const CircularLinkedList* list, const int pos)
+    {
+    	if (pos < 0 || pos >= list->length || IsEmpty(list))
+    	{
+    		return NULL;
+    	}
+    
+    	Node* search = list->head->link;
+    
+    	for (int i = 0; i < pos; ++i)
+    	{
+    		search = search->link;
+    	}
+    
+    	return search;
+    }
+    ```
+  
+  - `Insert`
+  
+    ```c
+    int Insert(CircularLinkedList* list, const int pos, const int data)
+    {
+    	Node* newNode = (Node*)malloc(sizeof(Node));
+    	if (newNode == NULL)
+    	{
+    		return 0;
+    	}
+    	newNode->data = data;
+    
+    	Node* prev = GetNode(list, pos - 1);
+    
+    	if (pos == 0)
+    	{
+    		if (IsEmpty(list))
+    		{
+    			newNode->link = newNode;
+    			list->head = newNode;
+    
+    			++(list->length);
+    			return 1;
+    		}
+    		
+    		prev = list->head;
+    	}
+    	else if (pos == list->length)
+    	{
+    		list->head = newNode;
+    	}
+    
+    	if (prev == NULL)
+    	{
+    		free(newNode);
+    		return 0;
+    	}
+    
+    	newNode->link = prev->link;
+    	prev->link = newNode;
+    
+    	++(list->length);
+    	return 1;
+    }
+    ```
+  
+  - `Delete`
+  
+    ```c
+    void Delete(CircularLinkedList* list, const int pos)
+    {
+    	Node* prev = GetNode(list, pos - 1);
+    
+    	if (pos == 0)
+    	{
+    		if (list->length == 1)
+    		{
+    			free(list->head);
+    			list->head = NULL;
+    
+    			--(list->length);
+    			return;
+    		}
+    		prev = list->head;
+    	}
+    	else if (pos == list->length - 1)
+    	{
+    		list->head = prev;
+    	}
+    
+    	if (prev == NULL || prev->link == NULL)
+    	{
+    		return;
+    	}
+    
+    	Node* current = prev->link;
+    	prev->link = current->link;
+    	free(current);
+    
+    	--(list->length);
+    }
+    ```
+  
+  - `Clear`
+  
+    ```c
+    void Clear(CircularLinkedList* list)
+    {
+    	if (IsEmpty(list))
+    	{
+    		return;
+    	}
+    
+    	Node* search = list->head;
+    	Node* temp;
+    
+    	do
+    	{
+    		temp = search->link;
+    		free(search);
+    		search = temp;
+    	} while (search != list->head);
+    
+        list->head = NULL;
+    	list->length = 0;
+    }
+    ```
+  
+  - `GetLength`
+  
+    ```c
+    int GetLength(const CircularLinkedList* list)
+    {
+    	return list->length;
+    }
+    ```
+
+## 이중 연결 리스트(doubly linked list)
+
+![doubly_linked_list](/assets/img/2024-04-09-data-structure-6/doubly_linked_list.png)
+
+- 하나의 노드가 선행 노드와 후속 노드에 대한 두개의 링크를 가지는 연결 리스트
+- 장단점
+  - 장점
+    - 선행 노드를 쉽게 알 수 있음
+  - 단점
+    - 공간을 많이 차지
+- c언어
+  - 노드&단순 연결 리스트 구조체 정의
+  
+    ```c
+    typedef struct Node
+    {
+    	int data;
+    	struct Node* lLink;
+    	struct Node* rLink;
+    } Node;
+    
+    typedef struct
+    {
+    	Node* head;
+    	int length;
+    } DoublyLinkedList;
+    ```
+  
+  
+  - `IsEmpty`
+  
+    ```c
+    int IsEmpty(const DoublyLinkedList* list)
+    {
+    	return list->head == NULL;
+    }
+    ```
+  
+  - `GetNode`
+  
+    ```c
+    Node* GetNode(const DoublyLinkedList* list, const int pos)
+    {
+    	if (pos < 0 || pos >= list->length || IsEmpty(list))
+    	{
+    		return NULL;
+    	}
+    
+    	Node* search = list->head;
+    	for (int i = 0; i < pos; ++i)
+    	{
+    		search = search->rLink;
+    	}
+    
+    	return search;
+    }
+    ```
+    
+  - `Insert`
+  
+    ```c
+    int Insert(DoublyLinkedList* list, const int pos, const int data)
+    {
+    	Node* newNode = (Node*)malloc(sizeof(Node));
+    	if (newNode == NULL)
+    	{
+    		return 0;
+    	}
+    	newNode->data = data;
+    
+    	if (pos == 0)
+    	{
+    		newNode->rLink = list->head;
+    		if (list->head != NULL)
+    		{
+    			list->head->lLink = newNode;
+    		}
+    		list->head = newNode;
+    
+    		++(list->length);
+    		return 1;
+    	}
+    
+    	Node* prev;
+    	if ((prev = GetNode(list, pos - 1)) == NULL)
+    	{
+    		free(newNode);
+    		return 0;
+    	}
+    
+    	if (prev->rLink != NULL)
+    	{
+    		prev->rLink->lLink = newNode;
+    	}
+    	newNode->rLink = prev->rLink;
+    	newNode->lLink = prev;
+    	prev->rLink = newNode;
+    
+    	++(list->length);
+    	return 1;
+    }
+    ```
+    
+  - `Delete`
+  
+    ```c
+    void Delete(DoublyLinkedList* list, const int pos)
+    {
+    	if (pos == 0)
+    	{
+    		Node* current = list->head;
+    		list->head = current->rLink;
+    		if (list->head != NULL)
+    		{
+    			list->head->lLink = NULL;
+    		}
+    		free(current);
+    
+    		--(list->length);
+    		return;
+    	}
+    
+    	Node* prev = GetNode(list, pos - 1);
+    	if (prev == NULL || prev->rLink == NULL)
+    	{
+    		return;
+    	}
+    
+    	Node* current = prev->rLink;
+    	prev->rLink = current->rLink;
+    	current->rLink->lLink = prev;
+    	free(current);
+    
+    	--(list->length);
+    }
+    ```
+    
+  - `Clear`
+  
+    ```c
+    void Clear(DoublyLinkedList* list)
+    {
+    	Node* search = list->head;
+    	Node* temp;
+    
+    	while (search != NULL)
+    	{
+    		temp = search->rLink;
+    		free(search);
+    		search = temp;
+    	}
+    
+    	list->head = NULL;
+    	list->length = 0;
+    }
+    ```
+    
+  - `GetLength`
+  
+    ```c
+    int GetLength(const DoublyLinkedList* list)
+    {
+    	return list->length;
+    }
+    ```
