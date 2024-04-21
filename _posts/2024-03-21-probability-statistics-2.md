@@ -299,15 +299,15 @@ $$
 - 이변량 자료: 변수가 2개인 자료
 - 2차원 히스토그램
 
-  ![2d_histogram](/assets/img/2024-03-21-probability-statistics-2/2d_histogram.png){ .w="50%" .h="50%"}
+  ![2d_histogram](/assets/img/2024-03-21-probability-statistics-2/2d_histogram.png){: w="50%" h="50%"}
 
 - 산점도(scatter)
 
-  ![scatter](/assets/img/2024-03-21-probability-statistics-2/scatter.png){ .w="50%" .h="50%"}
+  ![scatter](/assets/img/2024-03-21-probability-statistics-2/scatter.png){: w="50%" h="50%"}
 
 - 리그레쏘그램(regressogram)
 
-  ![rigressogram](/assets/img/2024-03-21-probability-statistics-2/rigressogram.png){ .w="50%" .h="50%"}
+  ![rigressogram](/assets/img/2024-03-21-probability-statistics-2/rigressogram.png){: w="50%" h="50%"}
 
 # 상관 분석
 
