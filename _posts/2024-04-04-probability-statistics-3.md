@@ -154,3 +154,98 @@ $$
   - 분산: $$Var(X) = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx = \sigma^2$$
   - 표준 편차: $$sd(X) = \sqrt{Var(X)} = \sigma$$
 
+# 이산 확률 분포
+
+## 이항 분포
+
+- 베르누이 실험: $$\Omega = \{0, 1 \}$$
+  - 성공과 실패로만 결과가 나오는 실험
+- 베르누이 시행: 확률이 $$p$$로 일정한 베르누이 실험을 $$n$$번 반복하는 시행
+  - 상호 배반
+  - 서로 독립
+- 이항 실험: 베르누이 시행에서 성공 횟수를 세는 실험
+
+![Binomial_distribution_pmf](/assets/img/2024-04-04-probability-statistics-3/Binomial_distribution_pmf.svg)*By Tayste - Own work, Public Domain*
+
+- 확률 변수 $$X$$: $$X \sim Bin(n, p)$$
+
+- 확률 질량 함수
+
+  $$
+  P(X) = \binom{n}{p} p^x q^{n-x}, \; x= 0, 1, \dots, n
+  $$
+  
+  - $$p = 0.5$$: 대칭
+  - $$p\lt 0.5$$: 오른쪽 꼬리
+  - $$p \gt 0.5$$: 왼쪽 꼬리
+  
+- 평균: $$E(X) = np$$
+
+- 분산: $$Var(X) = npq$$
+
+## 초기하 분포
+
+- 비복원 추출에서 $$N_1$$개의 목표가 포함된 $$N$$개의 모집단 중 $$n$$개를 추출할 때, 성공 횟수에 대한 확률 분포
+  - 상호 배반
+  - 비독립적
+    - 예) 공을 뽑을 때, 공을 다시 넣지 않고 계속 추출
+
+![HypergeometricPDF](/assets/img/2024-04-04-probability-statistics-3/HypergeometricPDF.png)*By Fuzzyrandom - Own work, CC BY-SA 4.0*
+
+- 확률 변수 $$X$$: $$X \sim Hypgeom(n, N_1, N)$$​
+
+- 확률 질량 함수
+
+  $$
+  P(X)=\frac{\binom{N_1}{x} \binom{N - N_1}{n - x}}{\binom{N}{n}}, \; x = \max(0, n - N + N_1), \dots, \min(n, N_1)
+  $$
+
+- 평균: $$E(X) = n\frac{N_1}{N}$$​
+  - $$p$$를 $$\frac{N_1}{N}$$로 생각
+
+- 분산: $$Var(X) = npq\left(\frac{N-n}{N-1}\right) = n \left(\frac{N_1}{N}\right) \left(1 - \frac{N_1}{N}\right) \left(\frac{N-n}{N-1}\right)$$
+
+- 초기하 분포 -> 이항 분포 근사
+  - $$n \lt 0.005N$$이면 이항분포로 생각할 수 있음
+
+## 포아송 분포
+
+- 단위 시간당 평균 발생률이 $$\lambda$$​인 사건의 발생 횟수
+
+![Poisson_pmf](/assets/img/2024-04-04-probability-statistics-3/Poisson_pmf.svg)*By Skbkekas - Own work, CC BY 3.0*
+
+- 확률 변수 $$X$$: $$X \sim Po(\lambda)$$
+
+- 확률 질량 함수
+
+  $$
+  P(X)=\frac{e^{-\lambda}\lambda^x}{x!}
+  $$
+
+- 평균: $$E(X) = \lambda$$
+- 분산: $$Var(X) = \lambda$$
+- 이항 분포 -> 포아송 분포 근사
+  - $$n \ge 100$$이고 $$\lambda = E(X) = np \le 5$$이면 $$Bin(n, p) = Po(np)$$로 생각할 수 있음
+
+# 연속 확률 분포
+
+## 균등 분포
+
+![Uniform_Distribution_PDF_SVG](/assets/img/2024-04-04-probability-statistics-3/Uniform_Distribution_PDF_SVG.svg){: w="50%" h="50%"}
+
+- 확률 변수 $$X$$: $$X \sim U(a, b)$$
+- 확률 밀도 함수
+
+  $$
+  f(x) = 
+  \begin{cases}
+  \frac{1}{b - a}, & a \le x \le b \\
+  0, & x \lt a \; or \; x \gt b
+  \end{cases}
+  $$
+
+- 평균: $$E(X) = \frac{a + b}{2}$$
+- 분산: $$Var(X) = \frac{(b - a)^2}{12}$$
+
+## 정규 분포
+
