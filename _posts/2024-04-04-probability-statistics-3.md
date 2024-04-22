@@ -249,3 +249,34 @@ $$
 
 ## 정규 분포
 
+![Normal_Distribution_PDF](/assets/img/2024-04-04-probability-statistics-3/Normal_Distribution_PDF.svg)*By Inductiveload*
+
+- 확률 변수 $$X$$: $$X \sim N(\mu, \sigma^2)$$
+- 확률 밀도 함수
+
+  $$
+  f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x - \mu)^2}{2\sigma^2}}, \; -\infty \lt x \lt \infty
+  $$
+
+- 정규 분포 확률 밀도 함수의 특징
+  - 종 모양
+  - 아래쪽 영역의 총면적은 항상 1
+  - 평균은 함수의 중앙에 위치하며, 평균에 대해 좌우 대칭이고, 평균에서 최댓값
+  - 평균, 중위수, 최빈값은 모두 같은 값
+  - 정규 분포의 모양과 위치는 평균과 표준편차에 의해 달라짐
+
+- 이항 분포 -> 정규 분포
+  - $$np \gt 5$$이고, $$nq \gt 5$$이면 $$X \sim N(np, npq)$$로 생각할 수 있음
+  - 연속성 수정: 이산형 분포를 연속형으로 근사할 때 양 끝이 버려져 발생하는 오차를 해결하는 방법
+
+    $$
+    P(a \le X \le b) \rightarrow P(a - 0.5 \le X \le b + 0.5)
+    $$
+    
+
+## 표준 정규 분포
+
+- 확률 변수 $$Z$$: $$Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$$
+- 정규 분포를 z-score에 대입하여 변환한 정규 분포
+- 서로 다른 평균과 표준편차를 가진 정규 분포를 비교할 수 있도록 해줌
+
