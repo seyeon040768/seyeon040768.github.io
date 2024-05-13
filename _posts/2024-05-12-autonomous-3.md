@@ -73,10 +73,9 @@ $$
 - 회전 과정
 1. \$\text{proj}_\mathbf{n}(\mathbf{v})=(\mathbf{n}\cdot\mathbf{v})\mathbf{n}$
 2. $$\mathbf{v}_\bot=\mathbf{v}-\text{proj}_\mathbf{n}(\mathbf{v})$$: $$\mathbf{v}$$에 수직(perpendicular)한 벡터
-3. $$\mathbf{n}\times\mathbf{v}$$: $$\mathbf{v}_\bot$$과 수직이며 길이가 같음
-    - \$\left\Vert\mathbf{n}\times\mathbf{v}\right\Vert=\left\Vert\mathbf{n}\right\Vert\left\Vert\mathbf{v}\right\Vert\sin{\alpha}=\left\Vert\mathbf{v}_\bot\right\Vert$
-4. \$R_\mathbf{n}(\mathbf{v}_\bot)=\cos\theta\mathbf{v}_\bot+\sin\theta(\mathbf{n}\times\mathbf{v})$
-5. \$R_\mathbf{n}(\mathbf{v})=\text{proj}_\mathbf{n}(\mathbf{v})+R_\mathbf{n}(\mathbf{v}_\bot)$
+3. $$\mathbf{n}\times\mathbf{v}$$: $$\mathbf{v}_\bot$$​과 수직이며 길이가 같음($$\left\Vert\mathbf{n}\times\mathbf{v}\right\Vert=\left\Vert\mathbf{n}\right\Vert\left\Vert\mathbf{v}\right\Vert\sin{\alpha}=\left\Vert\mathbf{v}_\bot\right\Vert$$)
+4. $$R_\mathbf{n}(\mathbf{v}_\bot)$$ 계산: $$R_\mathbf{n}(\mathbf{v}_\bot)=\cos\theta\mathbf{v}_\bot+\sin\theta(\mathbf{n}\times\mathbf{v})$$
+5. $$R_\mathbf{n}(\mathbf{v})$$ 계산: $$R_\mathbf{n}(\mathbf{v})=\text{proj}_\mathbf{n}(\mathbf{v})+R_\mathbf{n}(\mathbf{v}_\bot)$$
 
 - Rodrigues’ rotation formula(로드리게스 회전 공식)
 
@@ -89,9 +88,9 @@ $$
 
     $$
     R_\mathbf{n} = \begin{bmatrix}
-    \larr&R_\mathbf{n}(\mathbf{i})&\rarr\\
-    \larr&R_\mathbf{n}(\mathbf{j})&\rarr\\
-    \larr&R_\mathbf{n}(\mathbf{k})&\rarr
+    \leftarrow&R_\mathbf{n}(\mathbf{i})&\rightarrow\\
+    \leftarrow&R_\mathbf{n}(\mathbf{j})&\rightarrow\\
+    \leftarrow&R_\mathbf{n}(\mathbf{k})&\rightarrow
     \end{bmatrix} = \begin{bmatrix}
     c + (1-c)x^2 & (1-c)xy + sz & (1-c)xz - sy\\
     (1-c)xy - sz & c + (1-c)y^2 & (1-c)yz + sx\\
