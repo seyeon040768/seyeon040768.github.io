@@ -240,3 +240,146 @@ typora-root-url: ../
 
 ## 이진 탐색 트리
 
+- 탐색 작업을 효율적으로 하기 위한 이진 트리
+
+- 왼쪽 자식 노드 < 부모 노드 < 오른쪽 자식 노드 형태
+
+  - 중위 순회를 하면 정렬된 값을 얻을 수 있음
+
+- 탐색 연산
+
+  - 원하는 값과 비교한 값이 같으면 탐색 성공
+
+  - 원하는 값보다 비교한 값이 크면 왼쪽 자식 노드를 기준으로 다시 시작
+
+  - 원하는 값보다 비교한 값이 작으면 오른쪽 자식 노드를 기준으로 다시 시작
+
+  - c언어
+
+    ```c
+    TreeNode* Search(TreeNode* node, int key)
+    {
+    	if (node == NULL)
+    	{
+    		return NULL;
+    	}
+    
+    	if (node->data == key)
+    	{
+    		return node;
+    	}
+    
+    	if (node->data > key)
+    	{
+    		Search(node->left, key);
+    	}
+    	else
+    	{
+    		Search(node->right, key);
+    	}
+    }
+    ```
+
+- 삽입 연산
+
+  - 이진 탐색 트리에 원소를 삽입하기 위해서는 먼저 탐색 연산을 수행해야 함
+
+  - 탐색을 실패한 위치에 새로운 노드를 삽입
+
+  - c언어
+
+    ```c
+    TreeNode* Insert(TreeNode* node, int key)
+    {
+    	if (node == NULL)
+    	{
+    		return MakeNode(key);
+    	}
+    
+    	if (node->data > key)
+    	{
+    		node->left = Insert(node->left, key);
+    	}
+    	else
+    	{
+    		node->right = Insert(node->right, key);
+    	}
+    
+    	return node;
+    }
+    ```
+
+- 삭제 연산
+
+  - 삭제하려는 노드가 단말 노드(자식 노드가 없는 노드)인 경우
+
+    - 부모 노드를 찾아 연결을 해제
+
+  - 삭제하려는 노드가 하나의 서브 트리를 가지고 있는 경우
+
+    - 서브 트리를 부모 노드에 연결
+
+  - 삭제하려는 노드가 두개의 서브 트리를 가지고 있는 경우
+
+    - 삭제하려는 노드와 가장 비슷한 값을 가진 노드를 삭제 노드의 위치로 이동
+      - 가장 비슷한 값은 **왼쪽 서브 트리의 가장 큰 값** 또는 **오른쪽 서브 트리의 가장 작은 값** 중 하나
+      - 두 노드 중 아무거나 하나 선택하면 됨
+
+  - c언어
+
+    ```c
+    TreeNode* Delete(TreeNode* node, int key)
+    {
+    	if (node == NULL)
+    	{
+    		return NULL;
+    	}
+    
+    	if (node->data > key)
+    	{
+    		node->left = Delete(node->left, key);
+    	}
+    	else if (node->data < key)
+    	{
+    		node->right = Delete(node->right, key);
+    	}
+    	else
+    	{
+    		if (node->left == NULL) // case 1 or 2
+    		{
+    			TreeNode* temp = node->right;
+    			free(node);
+    			return temp;
+    		}
+    		else if (node->right == NULL) // case 1
+    		{
+    			TreeNode* temp = node->left;
+    			free(node);
+    			return temp;
+    		}
+    
+    		// case 3
+    		TreeNode* leftMax = node->left;
+    		while (leftMax->right != NULL)
+    		{
+    			leftMax = leftMax->right;
+    		}
+    
+    		TreeNode* rightMin = node->right;
+    		while (rightMin->left != NULL)
+    		{
+    			rightMin = rightMin->left;
+    		}
+    
+    		return leftMax; // or rightMin
+    	}
+    }
+    ```
+
+- 이진 탐색 트리의 성능
+  - 탐색, 삽입, 삭제 연산의 시간 복잡도는 높이 $$h$$에 비례
+    - 최선의 경우(이진 트리가 균형적으로 생성되어 있는 경우): $$h = \log_2n$$
+    - 최악의 경우(한 쪽으로 치우친 경우): $$h = n$$​
+
+
+
