@@ -1,7 +1,7 @@
 ---
 title: 자료구조 10. 정렬
 author: seyeon
-date: 2024-06-13 01:00:00 +0900
+date: 2024-06-13 02:00:00 +0900
 categories: [Computer Science, Data Structure]
 tags: [data, structure]
 pin: false
