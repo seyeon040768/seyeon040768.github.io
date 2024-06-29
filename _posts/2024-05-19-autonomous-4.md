@@ -2,7 +2,7 @@
 title: 자율주행 자동차 개발기 Chapter 4. 트래킹 알고리즘 개발 1
 author: seyeon
 date: 2024-05-19 23:00:00 +0900
-categories: [AI, Autonomous]
+categories: [Project, Autonomous]
 tags: [AI]
 pin: false
 math: true

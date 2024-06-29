@@ -2,7 +2,7 @@
 title: 자율주행 자동차 개발기 Chapter 3. 캘리브레이션 기초
 author: seyeon
 date: 2024-05-12 23:00:00 +0900
-categories: [AI, Autonomous]
+categories: [Project, Autonomous]
 tags: [AI]
 pin: false
 math: true
