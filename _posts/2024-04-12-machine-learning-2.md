@@ -191,6 +191,7 @@ $$
 
 - 오차율만으로는 자세한 정보를 알기 어려움
   - 예) 잘못 분류한 샘플이 위양성인지, 위음성인지
+
 - 혼동 행렬(confusion matrix): 이진 분류 문제에서 실제 클래스와 모델이 예측 분류한 클래스의 조합
 
   ![confusion_matrix](/assets/img/2024-04-12-machine-learning-2/confusion_matrix.png){: w="70%" h="70%"}
@@ -225,8 +226,28 @@ $$
 
 - 손익분기점(break-even point, BEP): '정밀도 = 재현율'일 때의 값
   - BEP를 비교하여 어떤 모델의 성능이 좋은지 알 수 있음
-- F1 스코어: 재현율과 정밀도의 조화 평균($$\frac{1}{F1} = \frac{1}{2} \cdot \left( \frac{1}{P} + \frac{1}{R} \right)$$)
 
+- P-R 곡선(P-R Curve): $$x$$축을 재현율로, $$y$$축을 정밀도로 설정한 곡선
+
+  ![prcurve](/assets/img/2024-04-12-machine-learning-2/prcurve.png)
+
+  - p-r curve 그리는 방법
+    - 모델을 통해 얻은 결과($$[0.0, 1.0]$$)를 오름차순으로 정렬
+    - 임계값을 0.0부터 점차 올리며 재현율과 정밀도를 계산해 점으로 표시
+      - 임계값이 0.0인 경우
+        - 모든 결과를 positive로 판단
+        - 재현율: $$FN$$이 없으므로 1.0
+        - 정밀도: $$FP$$가 매우 크므로 대략 0.5(정답 중 p의 비율을 따름)
+
+      - 임계값이 1.0인 경우
+        - 모든 결과를 negative로 판단(예측값이 정확히 1.0이 되는 경우는 거의 없음)
+        - 재현율: $$FN$$이 매우 크고 $$TP$$가 0이므로 0.0
+        - 정밀도: $$TP$$가 0이고 $$FP$$도 0이므로 $$\frac{0}{0}$$, 정밀도의 목적은 $$FP$$를 줄이는 것이므로 1.0으로 생각
+
+  - A 모델이 B 모델의 그래프 영역에 완전히 포함된다면 B 모델이 A 모델보다 훌륭하다고 할 수 있음
+  - 교차한다면 비교하기 어렵지만 일반적으로 영역의 넓이를 비교하거나 BEP를 비교
+
+- F1 스코어: 재현율과 정밀도의 조화 평균($$\frac{1}{F1} = \frac{1}{2} \cdot \left( \frac{1}{P} + \frac{1}{R} \right)$$)
   $$
   \begin{align*}
   F1
@@ -251,6 +272,7 @@ $$
     - $$\beta \lt 1$$: 정밀도의 영향이 큼
     - $$\beta = 1$$: F1 스코어
     - $$\beta \gt 1$$: 재현율의 영향이 큼
+
 - 여러 번의 훈련이나 테스트를 실행하거나 여러개의 데이터셋을 사용하여 많은 수의 혼동 행렬을 얻은 경우
   - 매크로 F1(macro-F1)
     - 각 혼동 행렬의 정밀도와 재현율을 평균내어 계산
@@ -275,22 +297,54 @@ $$
   - 마이크로 F1(micro-F1)
     - 모든 혼동 행렬의 원소들을 평균내어 정밀도와 재현율을 계산
     - 마이크로 정밀도
-  
+
       $$
       \text{micro-}P = \frac{\overline{TP}}{\overline{TP} + \overline{FP}}
       $$
-  
+
     - 마이크로 재현율
 
       $$
       \text{micro-}R = \frac{\overline{TP}}{\overline{TP} + \overline{FN}}
       $$
-  
+
     - 마이크로 F1
 
       $$
       \text{micro-}F1 = \frac{2 \times \text{micro-}P \times \text{micro-}R}{\text{micro-}P + \text{micro-}R}
       $$
 
-## P-R Curve와 ROC, AUC
+## ROC, AUC
 
+### ROC(Receiver Operating Characteristic)
+
+![roc_curve](/assets/img/2024-04-12-machine-learning-2/roc_curve.png)
+
+- 모델의 일반화 성능을 연구하기 위한 도구
+- P-R 곡선과 비슷하게 예측 결과를 기반으로 순서를 매겨 계산
+- $$x$$축에 $$FPR$$을, $$y$$축에 $$TPR$$을 그려 곡선 생성
+  - $$TPR$$: 참 양성률(True Positive Rate)
+  
+    $$
+    TPR = \frac{TP}{TP + FN}
+    $$
+
+  - $$FPR$$: 거짓 양성률(False Positive Rate)
+  
+    $$
+    FPR = \frac{FP}{TN + FP}
+    $$
+
+- 그림에서 대각선은 랜덤 예측 모델을 의미
+- P-R 곡선과 비슷하게 영역의 넓이(AUC, Area Under Curve)로 모델의 우열을 나눌 수 있음
+  - 완벽한 모델의 경우 $$(0, 1)$$을 지남
+- 실제 경우에는 데이터의 수가 한정되어 있으므로 완전한 곡선이 나오기 어려움
+  - 따라서 근사 곡선을 그려 판단
+- AUC 구하기
+  - ROC 곡선의 각 좌표를 $$\{(x_1, y_1), (x_2, y_2), ..., (x_m, y_m)\}$$로 설정
+
+  $$
+  AUC = \frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1} - x_i)(y_i + y_{i+1})
+  $$
+
+  
